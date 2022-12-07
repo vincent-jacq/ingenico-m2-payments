@@ -9,7 +9,7 @@
         "ingenico/ogone-client": "^7.1.0"
     },
     "type": "magento2-module",
-    "version": "2.12.4",
+    "version": "2.12.7",
     "license": [
         "OSL-3.0"
     ],
@@ -28,6 +28,10 @@
             "name": "Limegrow",
             "email": "info@limegrow.com",
             "homepage": "https://limegrow.com/"
+        },
+        {
+            "name": "Vincent Jacquottin",
+            "email": "vjacquottin@sqli.com"
         }
     ],
     "support": {
