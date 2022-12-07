@@ -923,7 +923,9 @@ class Config extends \Magento\Framework\App\Config
      */
     public function getAssignedStatus($state)
     {
-        $collection = $this->orderStatusCollectionFactory->create()->addStateFilter($state);
+        $collection = $this->orderStatusCollectionFactory->create()->addStateFilter($state)
+            ->addAttributeToSort('state_table.is_default', 'desc');
+
         return $collection->getFirstItem();
     }
 
