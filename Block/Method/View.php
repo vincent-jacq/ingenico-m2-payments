@@ -19,16 +19,6 @@ class View extends \Magento\Framework\View\Element\Template
     protected $_registry;
 
     /**
-     * @var IngenicoConfig
-     */
-    private $cnf;
-
-    /**
-     * @var OrderRepositoryInterface
-     */
-    private $orderRepository;
-
-    /**
      * Constructor
      */
     public function __construct(
@@ -38,9 +28,9 @@ class View extends \Magento\Framework\View\Element\Template
         \Magento\Framework\View\Asset\Repository $assetRepo,
         \Magento\Framework\UrlInterface $urlBuilder,
         \Magento\Framework\Registry $registry,
-        IngenicoConfig $cnf,
-        OrderFactory $orderFactory,
-        OrderRepositoryInterface $orderRepository,
+        private readonly IngenicoConfig $cnf,
+        private readonly OrderFactory $orderFactory,
+        private readonly OrderRepositoryInterface $orderRepository,
         array $data = []
     ) {
         parent::__construct($context, $data);
@@ -50,9 +40,6 @@ class View extends \Magento\Framework\View\Element\Template
         $this->_assetRepo = $assetRepo;
         $this->_urlBuilder = $urlBuilder;
         $this->_registry = $registry;
-        $this->cnf = $cnf;
-        $this->orderFactory = $orderFactory;
-        $this->orderRepository = $orderRepository;
     }
 
     public function getPaymentMethods()

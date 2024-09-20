@@ -20,11 +20,9 @@ class Service implements ServiceInterface
      * @param AliasFactory                  $aliasFactory
      */
     public function __construct(
-        \Magento\Checkout\Helper\Data $checkoutHelper,
-        \Ingenico\Payment\Model\AliasFactory $aliasFactory
+        private readonly \Magento\Checkout\Helper\Data $checkoutHelper,
+        private readonly \Ingenico\Payment\Model\AliasFactory $aliasFactory
     ) {
-        $this->checkoutHelper = $checkoutHelper;
-        $this->aliasFactory = $aliasFactory;
     }
 
     /**
