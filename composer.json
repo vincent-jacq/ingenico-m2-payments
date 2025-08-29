@@ -4,12 +4,12 @@
     "require": {
         "monolog/monolog": "*",
         "league/iso3166": "~3.0",
-        "graylog2/gelf-php": "~1.5",
-        "symfony/translation": ">=4.2",
-        "ingenico/ogone-client": "^7.1.0"
+        "graylog2/gelf-php": "^2.0",
+        "symfony/translation": ">=6.4",
+        "vincent-jacq/ogone-client": "8.0.1"
     },
     "type": "magento2-module",
-    "version": "2.12.8",
+    "version": "2.13.1",
     "license": [
         "OSL-3.0"
     ],

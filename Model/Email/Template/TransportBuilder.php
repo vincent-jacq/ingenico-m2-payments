@@ -7,6 +7,7 @@ namespace Ingenico\Payment\Model\Email\Template;
 use Magento\Framework\App\TemplateTypesInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\MailException;
+use Magento\Framework\HTTP\Mime;
 use Magento\Framework\Mail\EmailMessageInterface;
 use Magento\Framework\Mail\EmailMessageInterfaceFactory;
 use Magento\Framework\Mail\AddressConverter;
@@ -23,8 +24,6 @@ use Magento\Framework\Mail\TransportInterface;
 use Magento\Framework\Mail\TransportInterfaceFactory;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\Phrase;
-use Zend\Mime\Mime;
-use Zend\Mime\PartFactory;
 
 /**
  * TransportBuilder
@@ -132,8 +131,6 @@ class TransportBuilder extends \Magento\Framework\Mail\Template\TransportBuilder
 
     protected $attachments = [];
 
-    protected $partFactory;
-
     /**
      * TransportBuilder constructor
      *
@@ -179,7 +176,7 @@ class TransportBuilder extends \Magento\Framework\Mail\Template\TransportBuilder
         $this->addressConverter             = $addressConverter
             ?: $this->objectManager
                 ->get(AddressConverter::class);
-        $this->partFactory                  = $objectManager->get(PartFactory::class);
+
         parent::__construct(
             $templateFactory,
             $message,
@@ -405,11 +402,11 @@ class TransportBuilder extends \Magento\Framework\Mail\Template\TransportBuilder
         $content  = $template->processTemplate();
         switch ($template->getType()) {
             case TemplateTypesInterface::TYPE_TEXT:
-                $part['type'] = MimeInterface::TYPE_TEXT;
+                $partType = MimeInterface::TYPE_TEXT;
                 break;
 
             case TemplateTypesInterface::TYPE_HTML:
-                $part['type'] = MimeInterface::TYPE_HTML;
+                $partType = MimeInterface::TYPE_HTML;
                 break;
 
             default:
@@ -417,8 +414,8 @@ class TransportBuilder extends \Magento\Framework\Mail\Template\TransportBuilder
                     new Phrase('Unknown template type')
                 );
         }
-        $mimePart                  = $this->mimePartInterfaceFactory->create(['content' => $content]);
-        $parts                     = count($this->attachments) ? array_merge([$mimePart], $this->attachments)
+        $mimePart = $this->mimePartInterfaceFactory->create(['content' => $content, 'type' => $partType]);
+        $parts = count($this->attachments) ? array_merge([$mimePart], $this->attachments)
             : [$mimePart];
         $this->messageData['body'] = $this->mimeMessageInterfaceFactory->create(
             ['parts' => $parts]
@@ -429,7 +426,7 @@ class TransportBuilder extends \Magento\Framework\Mail\Template\TransportBuilder
             (string)$template->getSubject(),
             ENT_QUOTES
         );
-        $this->message                = $this->emailMessageInterfaceFactory->create($this->messageData);
+        $this->message = $this->emailMessageInterfaceFactory->create($this->messageData);
 
         return $this;
     }
@@ -469,12 +466,19 @@ class TransportBuilder extends \Magento\Framework\Mail\Template\TransportBuilder
      */
     public function addAttachment(?string $content, ?string $fileName, ?string $fileType)
     {
-        $attachmentPart = $this->partFactory->create();
-        $attachmentPart->setContent($content)
-                       ->setType($fileType)
-                       ->setFileName($fileName)
-                       ->setDisposition(Mime::DISPOSITION_ATTACHMENT)
-                       ->setEncoding(Mime::ENCODING_BASE64);
+        $attachmentPartParameters = [
+            'content' => $content,
+            'type' => $type,
+            'disposition' => $disposition,
+            'encoding' => $encoding
+        ];
+
+        if (!empty($filename)) {
+            $attachmentPartParameters['fileName'] = $filename;
+        }
+
+        $attachmentPart = $this->mimePartInterfaceFactory->create($attachmentPartParameters);
+
         $this->attachments[] = $attachmentPart;
 
         return $this;

@@ -89,6 +89,7 @@ class Method extends \Magento\Payment\Block\Info
                 }
 
                 // Filter empty values
+                $transactionData = array_filter($transactionData);
                 $transactionData = array_filter($transactionData, 'strlen');
 
                 $result = [];

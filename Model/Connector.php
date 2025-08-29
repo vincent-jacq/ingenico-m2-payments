@@ -14,6 +14,8 @@ use IngenicoClient\PaymentMethod\PaymentMethod;
 use IngenicoClient\Data;
 use IngenicoClient\Exception;
 use Ingenico\Payment\Logger\Main as IngenicoLogger;
+use Magento\Framework\Mail\MimeMessageInterfaceFactory;
+use Magento\Framework\ObjectManagerInterface;
 use Magento\Sales\Model\Order;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\Locale\ResolverInterface;
@@ -54,6 +56,9 @@ use Magento\Catalog\Api\ProductRepositoryInterfaceFactory;
 use Magento\Customer\Api\CustomerRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Ingenico\Payment\Model\Method\AbstractMethod;
+use Magento\Framework\HTTP\Mime;
+use Magento\Framework\Mail\MimePartInterface;
+use Magento\Framework\Mail\MimePartInterfaceFactory;
 
 /**
  * Class Connector
@@ -290,6 +295,23 @@ class Connector extends AbstractConnector implements ConnectorInterface
      */
     private $quoteProviderByOrderId;
 
+    /**
+     * Object Manager
+     *
+     * @var ObjectManagerInterface
+     */
+    private $objectManager;
+
+    /**
+     * @var MimePartInterfaceFactory
+     */
+    private $mimePartInterfaceFactory;
+
+    /**
+     * @var MimeMessageInterfaceFactory
+     */
+    private $mimeMessageInterfaceFactory;
+
     public function __construct(
         IngenicoLogger $logger,
         Config $cnf,
@@ -326,7 +348,10 @@ class Connector extends AbstractConnector implements ConnectorInterface
         ActionFlag $actionFlag,
         RedirectInterface $redirect,
         UserCollectionFactory $userCollectionFactory,
-        QuoteProviderByOrderId $quoteProviderByOrderId
+        QuoteProviderByOrderId $quoteProviderByOrderId,
+        ObjectManagerInterface $objectManager,
+        MimePartInterfaceFactory $mimePartInterfaceFactory = null,
+        MimeMessageInterfaceFactory $mimeMessageInterfaceFactory = null,
     ) {
         $this->logger = $logger;
         $this->cnf = $cnf;
@@ -364,6 +389,11 @@ class Connector extends AbstractConnector implements ConnectorInterface
         $this->redirect = $redirect;
         $this->userCollectionFactory = $userCollectionFactory;
         $this->quoteProviderByOrderId = $quoteProviderByOrderId;
+        $this->objectManager = $objectManager;
+        $this->mimePartInterfaceFactory = $mimePartInterfaceFactory ?: $this->objectManager
+            ->get(MimePartInterfaceFactory::class);
+        $this->mimeMessageInterfaceFactory = $mimeMessageInterfaceFactory ?: $this->objectManager
+            ->get(MimeMessageInterfaceFactory::class);
 
         $this->processor->setConnector($this);
         $this->coreLibrary = new IngenicoCoreLibrary($this);
@@ -1374,16 +1404,18 @@ class Connector extends AbstractConnector implements ConnectorInterface
                 if (method_exists($message, 'setBody')) {
                     $parts = $message->getBody()->getParts();
                     foreach ($attachedFiles as $attachedFile) {
-                        $parts[] = (new \Zend\Mime\Part())
-                            ->setContent($attachedFile['content'])
-                            ->setType($attachedFile['mime'])
-                            ->setFileName($attachedFile['name'])
-                            ->setDisposition(\Zend\Mime\Mime::DISPOSITION_ATTACHMENT)
-                            ->setEncoding(\Zend\Mime\Mime::ENCODING_BASE64)
-                        ;
+                        $mimePartParameters = [
+                            'content' => $attachedFile['content'],
+                            'type' => $attachedFile['mime'],
+                            'fileName' => $attachedFile['name'],
+                            'disposition' => Mime::DISPOSITION_ATTACHMENT,
+                            'encoding' => Mime::ENCODING_BASE64
+                        ];
+                        /** @var MimePartInterface $parts */
+                        $parts[] = $this->mimePartInterfaceFactory->create($mimePartParameters);
                     }
 
-                    $mimeMessage = (new \Zend\Mime\Message())->setParts($parts);
+                    $mimeMessage = $this->mimeMessageInterfaceFactory->create(['parts' => $parts]);
                     $message->setBody($mimeMessage);
                 } else {
                     // Magento 2.3.3 release introduces a new, immutable EmailMessageInterface
@@ -1435,7 +1467,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
         if (!$orderId) {
             return $this->localeResolver->getLocale();
         }
-        
+
         $order = $this->processor->getOrderByIncrementId($orderId);
         $orderStoreId = $order->getStoreId();
         $locale = $this->localeResolver->emulate($orderStoreId);
@@ -2169,7 +2201,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
                     $helper = ObjectManager::getInstance()->create('Magento\CustomerBalance\Helper\Data');
                     if ($helper->isEnabled() &&
                         !$helper->isAutoRefundEnabled() &&
-                        abs($order->getBaseCustomerBalanceAmount()) === 0
+                        abs($order->getBaseCustomerBalanceAmount() ?? 0) === 0
                     ) {
                         $this->processor->processOrderCancellation(
                             $fields[self::PARAM_NAME_ORDER_ID],
@@ -2773,6 +2805,9 @@ class Connector extends AbstractConnector implements ConnectorInterface
         if (is_array($str) || is_object($str)) {
             $str = json_encode($str);
         }
+
+        // correction on unknown method for the mode
+        $mode = $mode === 'crit' ? 'critical' : ($mode === 'warn' ? 'warning' : $mode);
 
         $this->logger->$mode($str);
     }

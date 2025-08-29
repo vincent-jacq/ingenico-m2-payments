@@ -255,7 +255,7 @@ class AbstractMethod extends \Magento\Payment\Model\Method\AbstractMethod
                 $payId,
                 null
             );
-            if (mb_strpos($result->getPm(), 'Bank transfer', null, 'UTF-8') !== false) {
+            if (mb_strpos($result->getPm(), 'Bank transfer', 0, 'UTF-8') !== false) {
                 throw new LocalizedException(__('modal.refund_failed.not_refundable', $result->getPm()));
             }
 
