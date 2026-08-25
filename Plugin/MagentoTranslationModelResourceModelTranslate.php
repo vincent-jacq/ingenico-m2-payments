@@ -65,7 +65,7 @@ class MagentoTranslationModelResourceModelTranslate
      *
      * @return array
      */
-    public function beforeGetTranslationArray(Translate $subject, $storeId = null, $locale = null)
+    public function beforeGetTranslationArray(Translate $subject, $storeId = null, $locale = null): array
     {
         $this->locale = $locale;
         return [$storeId, $locale];

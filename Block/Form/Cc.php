@@ -11,7 +11,7 @@ class Cc extends Method
      *
      * @return array
      */
-    public function getSavedCards()
+    public function getSavedCards(): array
     {
         return $this->configProvider->getSavedCards();
     }

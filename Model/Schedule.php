@@ -16,7 +16,7 @@ class Schedule
         $this->_cfg = $systemConfig;
     }
 
-    public function run()
+    public function run(): void
     {
         $this->_connector->cronHandler();
     }

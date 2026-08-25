@@ -52,7 +52,7 @@ class Banks extends AbstractBlock implements BlockInterface
      * Render block HTML
      * @return string
      */
-    protected function _toHtml()
+    protected function _toHtml(): string
     {
         $options = $this->getOptions();
 
@@ -76,7 +76,7 @@ class Banks extends AbstractBlock implements BlockInterface
      * Set Options
      * @param $options
      */
-    public function setOptions($options)
+    public function setOptions($options): void
     {
         $this->options = $options;
     }
@@ -85,7 +85,7 @@ class Banks extends AbstractBlock implements BlockInterface
      * Get Options
      * @return array|null
      */
-    public function getOptions()
+    public function getOptions(): ?array
     {
         if (count($this->options) === 0) {
             return $this->getAvailableBanks();
@@ -99,7 +99,7 @@ class Banks extends AbstractBlock implements BlockInterface
      *
      * @return array
      */
-    public function getAvailableBanks()
+    public function getAvailableBanks(): array
     {
         $banks = $this->config->getIDealBanks($this->storeManager->getStore()->getId());
 

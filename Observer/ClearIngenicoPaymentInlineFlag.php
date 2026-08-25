@@ -10,7 +10,7 @@ use Magento\Framework\Event\ObserverInterface;
 
 class ClearIngenicoPaymentInlineFlag extends CheckIsReturnFromPaymentInline implements ObserverInterface
 {
-    public function execute(Observer $observer)
+    public function execute(Observer $observer): void
     {
         // clear session value
         $this->isRequestFromPaymentInlinePage();

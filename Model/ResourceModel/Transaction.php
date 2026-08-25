@@ -4,7 +4,7 @@ namespace Ingenico\Payment\Model\ResourceModel;
 
 class Transaction extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 {
-    protected function _construct()
+    protected function _construct(): void
     {
         $this->_init('ingenico_payment_transaction', 'id');
     }

@@ -7,12 +7,12 @@ class MagentoMediaStorageModelFileUploader
     /**
      * Intercept original function and allow HTML file types
      */
-    public function aroundCheckAllowedExtension(\Magento\MediaStorage\Model\File\Uploader $subject, callable $proceed, $extension)
+    public function aroundCheckAllowedExtension(\Magento\MediaStorage\Model\File\Uploader $subject, callable $proceed, $extension): callable|true
     {
         if ($extension === 'html') {
             return true;
         }
-        
+
         return $proceed;
     }
 }

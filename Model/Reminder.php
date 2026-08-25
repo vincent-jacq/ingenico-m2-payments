@@ -10,29 +10,29 @@ class Reminder extends \Magento\Framework\Model\AbstractModel
     protected $_mathRandom;
 
     public function __construct(
-        \Magento\Framework\Model\Context $context,
-        \Magento\Framework\Registry $registry,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
-        \Magento\Framework\Math\Random $mathRandom,
-        array $data = []
+        \Magento\Framework\Model\Context                         $context,
+        \Magento\Framework\Registry                              $registry,
+        \Magento\Framework\Math\Random                           $mathRandom,
+        ?\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+        ?\Magento\Framework\Data\Collection\AbstractDb           $resourceCollection = null,
+        array                                                    $data = []
     ) {
         parent::__construct($context, $registry, $resource, $resourceCollection, $data);
 
         $this->_mathRandom = $mathRandom;
     }
 
-    protected function _construct()
+    protected function _construct(): void
     {
         $this->_init(\Ingenico\Payment\Model\ResourceModel\Reminder::class);
     }
 
-    public function getIdentities()
+    public function getIdentities(): array
     {
         return [self::CACHE_TAG . '_' . $this->getId()];
     }
 
-    public function register($order)
+    public function register($order): void
     {
         $this->load($order->getIncrementId(), self::PARAM_NAME_ORDER_ID);
         $this->addData([
@@ -42,7 +42,7 @@ class Reminder extends \Magento\Framework\Model\AbstractModel
         ])->save();
     }
 
-    public function markAsSent($orderId)
+    public function markAsSent($orderId): void
     {
         $this->load($orderId, self::PARAM_NAME_ORDER_ID);
         if ($this->getId()) {

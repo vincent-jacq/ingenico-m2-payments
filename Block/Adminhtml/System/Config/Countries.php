@@ -20,7 +20,7 @@ class Countries extends \Magento\Backend\Block\Template
     }
 
 
-    public function getCountries()
+    public function getCountries(): array
     {
         return $this->_connector->getAllCountries();
     }

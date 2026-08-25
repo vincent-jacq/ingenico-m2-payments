@@ -75,7 +75,7 @@ class CleanExpiredOrders
         OrderCollectionFactory $orderCollectionFactory,
         PaymentCollectionFactory $paymentCollectionFactory,
         OrderRepositoryInterface $orderRepository,
-        OrderManagementInterface $orderManagement = null
+        ?OrderManagementInterface $orderManagement = null
     ) {
         $this->storesConfig = $storesConfig;
         $this->ingenicoConfig = $ingenicoConfig;
@@ -92,7 +92,7 @@ class CleanExpiredOrders
      *
      * @return void
      */
-    public function execute()
+    public function execute(): void
     {
         $lifetimes = $this->storesConfig->getStoresConfigByPath('sales/orders/delete_pending_after');
 
@@ -200,7 +200,7 @@ class CleanExpiredOrders
      *
      * @return OrderPaymentInterface|null
      */
-    private function getOrderPayment($orderId)
+    private function getOrderPayment($orderId): ?OrderPaymentInterface
     {
         $collection = $this->paymentCollectionFactory->create()->setOrderFilter($orderId);
         if ($collection) {

@@ -50,19 +50,19 @@ class AbstractMethod extends \Magento\Payment\Model\Method\AbstractMethod
     protected $registry;
 
     public function __construct(
-        \Magento\Framework\Model\Context $context,
-        \Magento\Framework\Registry $registry,
-        \Magento\Framework\Api\ExtensionAttributesFactory $extensionFactory,
-        \Magento\Framework\Api\AttributeValueFactory $customAttributeFactory,
-        \Magento\Payment\Helper\Data $paymentData,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Magento\Payment\Model\Method\Logger $logger,
-        \Ingenico\Payment\Model\Connector $connector,
-        \Ingenico\Payment\Model\Config $cnf,
-        \Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
-        \Magento\Framework\Data\Collection\AbstractDb $resourceCollection = null,
-        array $data = [],
-        DirectoryHelper $directory = null
+        \Magento\Framework\Model\Context                         $context,
+        \Magento\Framework\Registry                              $registry,
+        \Magento\Framework\Api\ExtensionAttributesFactory        $extensionFactory,
+        \Magento\Framework\Api\AttributeValueFactory             $customAttributeFactory,
+        \Magento\Payment\Helper\Data                             $paymentData,
+        \Magento\Framework\App\Config\ScopeConfigInterface       $scopeConfig,
+        \Magento\Payment\Model\Method\Logger                     $logger,
+        \Ingenico\Payment\Model\Connector                        $connector,
+        \Ingenico\Payment\Model\Config                           $cnf,
+        ?\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
+        ?\Magento\Framework\Data\Collection\AbstractDb           $resourceCollection = null,
+        array                                                    $data = [],
+        ?DirectoryHelper                                         $directory = null
     ) {
         parent::__construct(
             $context,
@@ -90,7 +90,7 @@ class AbstractMethod extends \Magento\Payment\Model\Method\AbstractMethod
      *
      * @return bool
      */
-    public function isActive($storeId = null)
+    public function isActive($storeId = null): bool
     {
         if (!$this->cnf->isExtensionConfigured()) {
             return false;
@@ -111,7 +111,7 @@ class AbstractMethod extends \Magento\Payment\Model\Method\AbstractMethod
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @api
      */
-    public function initialize($paymentAction, $stateObject)
+    public function initialize($paymentAction, $stateObject): static
     {
         $this->connector->log(sprintf('initialize: %s', $paymentAction));
 
@@ -140,7 +140,7 @@ class AbstractMethod extends \Magento\Payment\Model\Method\AbstractMethod
      *
      * @return mixed
      */
-    public function getConfigData($field, $storeId = null)
+    public function getConfigData($field, $storeId = null): mixed
     {
         // Get default status for "Pending payment" state (instead of "New" state)
         if ('order_status' === $field) {
@@ -154,7 +154,7 @@ class AbstractMethod extends \Magento\Payment\Model\Method\AbstractMethod
     /**
      * @return mixed|false
      */
-    public function getCoreLibraryMethodInstance()
+    public function getCoreLibraryMethodInstance(): mixed
     {
         // Payment method with filled data is in saved registry
         $inlineData = $this->_registry->registry($this->connector::REGISTRY_KEY_TEMPLATE_VARS_INLINE);
@@ -180,7 +180,7 @@ class AbstractMethod extends \Magento\Payment\Model\Method\AbstractMethod
      * @api
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function capture(\Magento\Payment\Model\InfoInterface $payment, $amount)
+    public function capture(\Magento\Payment\Model\InfoInterface $payment, $amount): static
     {
         if (!$this->canCapture()) {
             throw new LocalizedException(__('ingenico.exception.message6'));
@@ -231,7 +231,7 @@ class AbstractMethod extends \Magento\Payment\Model\Method\AbstractMethod
      * @api
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function refund(\Magento\Payment\Model\InfoInterface $payment, $amount)
+    public function refund(\Magento\Payment\Model\InfoInterface $payment, $amount): static
     {
         if (!$this->canRefund()) {
             throw new LocalizedException(__('ingenico.exception.message7'));
@@ -303,7 +303,7 @@ class AbstractMethod extends \Magento\Payment\Model\Method\AbstractMethod
      * @api
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function cancel(\Magento\Payment\Model\InfoInterface $payment)
+    public function cancel(\Magento\Payment\Model\InfoInterface $payment): static
     {
         /** @var Transaction $transaction */
         $transaction = $payment->getAuthorizationTransaction();
@@ -343,7 +343,7 @@ class AbstractMethod extends \Magento\Payment\Model\Method\AbstractMethod
      * @api
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function fetchTransactionInfo(\Magento\Payment\Model\InfoInterface $payment, $transactionId)
+    public function fetchTransactionInfo(\Magento\Payment\Model\InfoInterface $payment, $transactionId): mixed
     {
         $trxData = $this->connector->getIngenicoPaymentById($transactionId);
         if (!$trxData) {

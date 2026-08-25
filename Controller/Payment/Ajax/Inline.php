@@ -8,7 +8,7 @@ class Inline extends \Ingenico\Payment\Controller\Payment\Base
      * @inheritdoc
      * @throws InvalidArgumentException
      */
-    public function execute()
+    public function execute(): \Magento\Framework\Controller\Result\Json|\Magento\Framework\Controller\ResultInterface|\Magento\Framework\App\ResponseInterface
     {
         if (!$this->getRequest()->isAjax()) {
             throw new \Magento\Framework\Exception\LocalizedException(__('ingenico.exception.message2'));

@@ -4,7 +4,7 @@ namespace Ingenico\Payment\Model\Config\Source\Settings;
 
 class Mode implements \Magento\Framework\Option\ArrayInterface
 {
-    public function toOptionArray()
+    public function toOptionArray(): array
     {
         $out = [];
         foreach ($this->toArray() as $value => $label) {
@@ -14,7 +14,7 @@ class Mode implements \Magento\Framework\Option\ArrayInterface
         return $out;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return ['basic' => __('form.settings.mode.basic'), 'advanced' => __('form.settings.mode.advanced')];
     }

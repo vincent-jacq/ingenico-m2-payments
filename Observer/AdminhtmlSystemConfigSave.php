@@ -27,7 +27,7 @@ class AdminhtmlSystemConfigSave implements ObserverInterface
     /**
      * @param Observer $observer
      */
-    public function execute(Observer $observer)
+    public function execute(Observer $observer): void
     {
         $request = $observer->getData('request');
 

@@ -4,7 +4,7 @@ namespace Ingenico\Payment\Block\Adminhtml\System\Config\Connection;
 
 class User extends \Magento\Config\Block\System\Config\Form\Field
 {
-    protected function _getElementHtml(\Magento\Framework\Data\Form\Element\AbstractElement $element)
+    protected function _getElementHtml(\Magento\Framework\Data\Form\Element\AbstractElement $element): string
     {
         $id = $element->getHtmlId();
         return implode('', [

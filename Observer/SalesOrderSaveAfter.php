@@ -48,7 +48,7 @@ class SalesOrderSaveAfter implements ObserverInterface
      * @throws \Magento\Framework\Exception\InputException
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function execute(Observer $observer)
+    public function execute(Observer $observer): void
     {
         /** @var \Magento\Sales\Model\Order $order */
         $order = $observer->getData('order');
@@ -83,7 +83,7 @@ class SalesOrderSaveAfter implements ObserverInterface
      * @param array $filters
      * @return \Magento\Sales\Model\ResourceModel\Order\Collection
      */
-    protected function getSalesOrderCollection(array $filters = [])
+    protected function getSalesOrderCollection(array $filters = []): \Magento\Sales\Model\ResourceModel\Order\Collection
     {
         /** @var \Magento\Sales\Model\ResourceModel\Order\Collection $salesOrderCollection */
         $salesOrderCollection = $this->salesOrderCollectionFactory->create();

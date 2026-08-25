@@ -18,7 +18,7 @@ class CcLogos implements ArrayInterface
     /**
      * {@inheritdoc}
      */
-    public function toOptionArray()
+    public function toOptionArray(): array
     {
         return [
             [

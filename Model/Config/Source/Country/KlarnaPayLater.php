@@ -15,7 +15,7 @@ class KlarnaPayLater extends Country
      * @param string|array $foregroundCountries
      * @return array
      */
-    public function toOptionArray($isMultiselect = false, $foregroundCountries = '')
+    public function toOptionArray($isMultiselect = false, $foregroundCountries = ''): array
     {
         if (!$this->_options) {
             $this->_options = $this->_countryCollection

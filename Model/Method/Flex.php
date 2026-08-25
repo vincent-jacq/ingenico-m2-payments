@@ -24,7 +24,7 @@ class Flex extends AbstractMethod
      * @param \Magento\Quote\Api\Data\CartInterface|null $quote
      * @return bool
      */
-    public function isAvailable(\Magento\Quote\Api\Data\CartInterface $quote = null)
+    public function isAvailable(?\Magento\Quote\Api\Data\CartInterface $quote = null): bool
     {
         if (!parent::isAvailable($quote)) {
             return false;
@@ -46,7 +46,7 @@ class Flex extends AbstractMethod
      * @return $this
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function assignData(DataObject $data)
+    public function assignData(DataObject $data): static
     {
         if (!$data instanceof DataObject) {
             $data = new DataObject($data);
@@ -82,7 +82,7 @@ class Flex extends AbstractMethod
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function validate()
+    public function validate(): static
     {
         parent::validate();
 

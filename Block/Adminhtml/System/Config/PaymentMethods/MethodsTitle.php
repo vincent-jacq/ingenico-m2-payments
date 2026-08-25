@@ -5,7 +5,7 @@ namespace Ingenico\Payment\Block\Adminhtml\System\Config\PaymentMethods;
 class MethodsTitle extends \Magento\Config\Block\System\Config\Form\Fieldset
 {
 
-    protected function _getHeaderTitleHtml($element)
+    protected function _getHeaderTitleHtml($element): string
     {
         return '<a id="' .
             $element->getHtmlId() .

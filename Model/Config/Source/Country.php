@@ -18,7 +18,7 @@ class Country implements \Magento\Framework\Option\ArrayInterface
         $this->_connector = $connector;
     }
 
-    public function toOptionArray($isMultiselect = false, $foregroundCountries = '')
+    public function toOptionArray($isMultiselect = false, $foregroundCountries = ''): array
     {
         $limitTo = array_keys($this->_connector->getAllCountries());
 

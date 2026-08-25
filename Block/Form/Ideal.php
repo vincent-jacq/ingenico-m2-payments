@@ -13,7 +13,7 @@ class Ideal extends Method
      *
      * @return array
      */
-    public function getAvailableBanks()
+    public function getAvailableBanks(): array
     {
         return ObjectManager::getInstance()->get('Ingenico\Payment\Block\Ideal\Banks')->getAvailableBanks();
     }

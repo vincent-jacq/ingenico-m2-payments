@@ -8,7 +8,7 @@ namespace Ingenico\Payment\Block\Adminhtml\System\Config\Settings;
 class PaymentReminderEmailHeading extends \Magento\Config\Block\System\Config\Form\Field\Heading
 {
 
-    public function render(\Magento\Framework\Data\Form\Element\AbstractElement $element)
+    public function render(\Magento\Framework\Data\Form\Element\AbstractElement $element): string
     {
         $label = $element->getLabel()
             .'<span class="hint" onclick="Ogone.showModal(\'settings_paymentreminderemail_content\',\''.__("modal.reminder.whatis").'\');"></span>';

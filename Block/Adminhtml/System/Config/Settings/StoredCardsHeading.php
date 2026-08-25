@@ -8,7 +8,7 @@ namespace Ingenico\Payment\Block\Adminhtml\System\Config\Settings;
 class StoredCardsHeading extends \Magento\Config\Block\System\Config\Form\Field\Heading
 {
 
-    public function render(\Magento\Framework\Data\Form\Element\AbstractElement $element)
+    public function render(\Magento\Framework\Data\Form\Element\AbstractElement $element): string
     {
         $label = $element->getLabel()
             .'<span class="hint" onclick="Ogone.showModal(\'settings_oneclickpayment_content\',\''.__("modal.oneclick.whatis").'\');"></span>';

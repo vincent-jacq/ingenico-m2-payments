@@ -13,7 +13,7 @@ class Methods extends ArraySerialized
      * @override
      * @return void
      */
-    protected function _afterLoad()
+    protected function _afterLoad(): void
     {
         if (!is_array($this->getValue())) {
             $value = $this->getValue();
@@ -27,7 +27,7 @@ class Methods extends ArraySerialized
      * @override
      * @throws \Exception
      */
-    public function beforeSave()
+    public function beforeSave(): void
     {
         $methods = $this->getValue();
         $processedMethods = [];
@@ -54,7 +54,7 @@ class Methods extends ArraySerialized
      * @return bool
      * @throws LocalizedException
      */
-    private function validateMethod($method, $processedMethods)
+    private function validateMethod($method, $processedMethods): bool
     {
         if (!is_array($method)
             || !array_key_exists('pm', $method)

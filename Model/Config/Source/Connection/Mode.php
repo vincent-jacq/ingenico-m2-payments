@@ -4,7 +4,7 @@ namespace Ingenico\Payment\Model\Config\Source\Connection;
 
 class Mode implements \Magento\Framework\Option\ArrayInterface
 {
-    public function toOptionArray()
+    public function toOptionArray(): array
     {
         $out = [];
         foreach ($this->toArray() as $value => $label) {
@@ -14,7 +14,7 @@ class Mode implements \Magento\Framework\Option\ArrayInterface
         return $out;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return ['test' => __('form.header.test'), 'live' => __('form.header.live')];
     }

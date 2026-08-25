@@ -6,10 +6,10 @@
         "league/iso3166": "~3.0",
         "graylog2/gelf-php": "^2.0",
         "symfony/translation": ">=6.4",
-        "vincent-jacq/ogone-client": "8.0.1"
+        "vincent-jacq/ogone-client": "8.0.2"
     },
     "type": "magento2-module",
-    "version": "2.13.1",
+    "version": "2.13.2",
     "license": [
         "OSL-3.0"
     ],

@@ -26,7 +26,7 @@ class Ideal extends AbstractMethod
      * @return $this
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function assignData(DataObject $data)
+    public function assignData(DataObject $data): static
     {
         if (!$data instanceof DataObject) {
             $data = new DataObject($data);
@@ -52,7 +52,7 @@ class Ideal extends AbstractMethod
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function validate()
+    public function validate(): static
     {
         parent::validate();
 
@@ -84,7 +84,7 @@ class Ideal extends AbstractMethod
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @api
      */
-    public function initialize($paymentAction, $stateObject)
+    public function initialize($paymentAction, $stateObject): static
     {
         parent::initialize($paymentAction, $stateObject);
 

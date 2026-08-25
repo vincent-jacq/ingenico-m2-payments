@@ -30,7 +30,7 @@ class StepOne extends AbstractBlock implements RendererInterface
         parent::__construct($context, $data);
     }
 
-    public function render(AbstractElement $element)
+    public function render(AbstractElement $element): string
     {
         return implode('', [
             '<tr id="row_'.$element->getHtmlId().'">',
@@ -48,7 +48,7 @@ class StepOne extends AbstractBlock implements RendererInterface
     /**
      * @return \IngenicoClient\WhiteLabels
      */
-    private function getWhiteLabelsData()
+    private function getWhiteLabelsData(): \IngenicoClient\WhiteLabels
     {
         return $this->connector->getCoreLibrary()->getWhiteLabelsData();
     }

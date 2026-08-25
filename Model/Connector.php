@@ -340,18 +340,18 @@ class Connector extends AbstractConnector implements ConnectorInterface
         OrderCollectionFactory $orderCollectionFactory,
         OrderFactory $orderFactory,
         QuoteRepository $quoteRepository,
-        Http $request,
-        ProductMetadata $productMetadata,
-        FileDriver $fileDriver,
-        Json $json,
-        ResponseFactory $responseFactory,
-        ActionFlag $actionFlag,
-        RedirectInterface $redirect,
-        UserCollectionFactory $userCollectionFactory,
-        QuoteProviderByOrderId $quoteProviderByOrderId,
-        ObjectManagerInterface $objectManager,
-        MimePartInterfaceFactory $mimePartInterfaceFactory = null,
-        MimeMessageInterfaceFactory $mimeMessageInterfaceFactory = null,
+        Http                         $request,
+        ProductMetadata              $productMetadata,
+        FileDriver                   $fileDriver,
+        Json                         $json,
+        ResponseFactory              $responseFactory,
+        ActionFlag                   $actionFlag,
+        RedirectInterface            $redirect,
+        UserCollectionFactory        $userCollectionFactory,
+        QuoteProviderByOrderId       $quoteProviderByOrderId,
+        ObjectManagerInterface       $objectManager,
+        ?MimePartInterfaceFactory    $mimePartInterfaceFactory = null,
+        ?MimeMessageInterfaceFactory $mimeMessageInterfaceFactory = null,
     ) {
         $this->logger = $logger;
         $this->cnf = $cnf;
@@ -403,7 +403,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
     /**
      * @return IngenicoCoreLibrary
      */
-    public function getCoreLibrary()
+    public function getCoreLibrary(): IngenicoCoreLibrary
     {
         return $this->coreLibrary;
     }
@@ -413,12 +413,12 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return Processor
      */
-    public function getProcessor()
+    public function getProcessor(): Processor
     {
         return $this->processor;
     }
 
-    public function setOrderId($orderId)
+    public function setOrderId($orderId): static
     {
         $this->orderId = $orderId;
 
@@ -430,7 +430,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return string
      */
-    public function requestShoppingCartExtensionId()
+    public function requestShoppingCartExtensionId(): string
     {
         $composerData = $this->json->unserialize(
             $this->fileDriver->fileGetContents(__DIR__ . '../../composer.json')
@@ -450,7 +450,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return bool
      */
-    public function requestSettingsMode()
+    public function requestSettingsMode(): bool
     {
         return $this->cnf->getMode();
     }
@@ -462,7 +462,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return array
      */
-    public function requestSettings($mode)
+    public function requestSettings($mode): array
     {
         $result = \IngenicoClient\Configuration::getDefault();
         $storeId = $this->getStoreId();
@@ -548,7 +548,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return mixed
      */
-    public function requestOrderId()
+    public function requestOrderId(): mixed
     {
         if (!$this->orderId) {
             if ($reminderOrderId = $this->checkoutSession->getData(self::PARAM_NAME_REMINDER_ORDER_ID)) {
@@ -569,7 +569,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return int
      */
-    public function requestCustomerId()
+    public function requestCustomerId(): int
     {
         if (!$this->customerId) {
             if ($orderId = $this->requestOrderId()) {
@@ -599,7 +599,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param array $params
      * @return string
      */
-    public function buildPlatformUrl($type, array $params = [])
+    public function buildPlatformUrl($type, array $params = []): string
     {
         switch ($type) {
             case $this->coreLibrary::CONTROLLER_TYPE_PAYMENT:
@@ -622,7 +622,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return void
      */
-    public function processSuccessUrls()
+    public function processSuccessUrls(): void
     {
         try {
             $this->coreLibrary->processReturnUrls();
@@ -642,7 +642,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @return void
      * @throws LocalizedException
      */
-    public function processPayment($aliasId = null, $forceAliasSave = false)
+    public function processPayment($aliasId = null, $forceAliasSave = false): void
     {
         $orderId = $this->requestOrderId();
 
@@ -662,7 +662,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *showPaymentListRedirectTemplate
      * @throws LocalizedException
      */
-    public function processPaymentRedirect($aliasId)
+    public function processPaymentRedirect($aliasId): void
     {
         $orderId = $this->requestOrderId();
 
@@ -683,7 +683,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @throws LocalizedException
      */
-    public function processPaymentRedirectSpecified($aliasId, $paymentMethod, $brand)
+    public function processPaymentRedirectSpecified($aliasId, $paymentMethod, $brand): void
     {
         $orderId = $this->requestOrderId();
 
@@ -702,7 +702,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @throws LocalizedException
      */
-    public function processPaymentInline($aliasId = null)
+    public function processPaymentInline($aliasId = null): void
     {
         $orderId = $this->requestOrderId();
 
@@ -724,7 +724,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param string|null $message
      * @return void
      */
-    public function updateOrderStatus($orderId, $paymentResult, $message = null)
+    public function updateOrderStatus($orderId, $paymentResult, $message = null): void
     {
         $storeId = $this->getStoreId($orderId);
 
@@ -770,7 +770,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param $orderId
      * @return bool
      */
-    public function isCartPaid($orderId)
+    public function isCartPaid($orderId): bool
     {
         $order = $this->processor->getOrderByIncrementId($orderId);
         $orders = $this->orderCollectionFactory->create()
@@ -797,7 +797,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @throws \IngenicoClient\Exception
      */
-    public function submitOnboardingRequest($companyName, $email, $countryCode)
+    public function submitOnboardingRequest($companyName, $email, $countryCode): void
     {
         $this->coreLibrary->submitOnboardingRequest(
             $companyName,
@@ -820,7 +820,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param mixed $orderId
      * @return array
      */
-    public function requestOrderInfo($orderId = null)
+    public function requestOrderInfo($orderId = null): array
     {
         $order = $this->processor->getOrderByIncrementId($orderId);
 
@@ -1079,7 +1079,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param mixed $reservedOrderId
      * @return array
      */
-    public function requestOrderInfoBeforePlaceOrder($reservedOrderId)
+    public function requestOrderInfoBeforePlaceOrder($reservedOrderId): array
     {
         $quote = $this->checkoutSession->getQuote();
 
@@ -1280,7 +1280,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return string|false
      */
-    public function getOrderPaymentMethod($orderId)
+    public function getOrderPaymentMethod($orderId): false|string
     {
         try {
             $order = $this->processor->getOrderByIncrementId($orderId);
@@ -1302,7 +1302,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return string|false
      */
-    public function getQuotePaymentMethod($quoteId = null)
+    public function getQuotePaymentMethod($quoteId = null): false|string
     {
         try {
             if (!$quoteId) {
@@ -1331,7 +1331,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param mixed $value
      * @return void
      */
-    public function saveSetting($mode, $key, $value)
+    public function saveSetting($mode, $key, $value): void
     {
         // do nothing
     }
@@ -1357,7 +1357,8 @@ class Connector extends AbstractConnector implements ConnectorInterface
         $fromName,
         $subject,
         array $attachedFiles = []
-    ) {
+    ): bool|int
+    {
         if (!$template instanceof \IngenicoClient\MailTemplate) {
             throw new LocalizedException(__('Template variable must be instance of MailTemplate'));
         }
@@ -1462,7 +1463,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param int|null $orderId
      * @return string
      */
-    public function getLocale($orderId = null)
+    public function getLocale($orderId = null): string
     {
         if (!$orderId) {
             return $this->localeResolver->getLocale();
@@ -1483,7 +1484,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param $canceledAmount
      * @return void
      */
-    public function addCancelledAmount($orderId, $canceledAmount)
+    public function addCancelledAmount($orderId, $canceledAmount): void
     {
         // do nothing
     }
@@ -1495,7 +1496,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param $capturedAmount
      * @return void
      */
-    public function addCapturedAmount($orderId, $capturedAmount)
+    public function addCapturedAmount($orderId, $capturedAmount): void
     {
         // do nothing
     }
@@ -1507,7 +1508,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param $refundedAmount
      * @return void
      */
-    public function addRefundedAmount($orderId, $refundedAmount)
+    public function addRefundedAmount($orderId, $refundedAmount): void
     {
         // do nothing
     }
@@ -1518,7 +1519,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param $orderId
      * @return bool
      */
-    public function sendOrderPaidCustomerEmail($orderId)
+    public function sendOrderPaidCustomerEmail($orderId): bool
     {
         $order = $this->processor->getOrderByIncrementId($orderId);
         $locale = $this->getLocale($orderId);
@@ -1558,7 +1559,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param $orderId
      * @return bool
      */
-    public function sendOrderPaidAdminEmail($orderId)
+    public function sendOrderPaidAdminEmail($orderId): bool
     {
         // already implemented in Magento
     }
@@ -1569,13 +1570,13 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param $orderId
      * @return bool
      */
-    public function sendNotificationAuthorization($orderId)
+    public function sendNotificationAuthorization($orderId): bool
     {
         $order = $this->processor->getOrderByIncrementId($orderId);
         $locale = $this->getLocale($orderId);
 
         if (!$this->registry->registry(self::REGISTRY_KEY_CAN_SEND_AUTH_EMAIL)) {
-            return null;
+            return false;
         }
 
         try {
@@ -1613,10 +1614,10 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param $orderId
      * @return bool
      */
-    public function sendNotificationAdminAuthorization($orderId)
+    public function sendNotificationAdminAuthorization($orderId): bool
     {
         if (!$this->registry->registry(self::REGISTRY_KEY_CAN_SEND_AUTH_EMAIL)) {
-            return null;
+            return false;
         }
 
         $order = $this->processor->getOrderByIncrementId($orderId);
@@ -1685,13 +1686,13 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param $orderId
      * @return bool
      */
-    public function sendReminderNotificationEmail($orderId)
+    public function sendReminderNotificationEmail($orderId): bool
     {
         try {
             /** @var \Ingenico\Payment\Model\Reminder $reminder */
             $reminder = $this->reminderFactory->create()->load($orderId, self::PARAM_NAME_ORDER_ID);
             if (!$reminder->getId() || $reminder->getIsSent()) {
-                return null;
+                return false;
             }
 
             $this->setOrderId($orderId);
@@ -1761,7 +1762,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param $orderId
      * @return bool
      */
-    public function sendRefundFailedCustomerEmail($orderId)
+    public function sendRefundFailedCustomerEmail($orderId): bool
     {
         $order = $this->processor->getOrderByIncrementId($orderId);
         $locale = $this->getLocale($orderId);
@@ -1801,7 +1802,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param $orderId
      * @return bool
      */
-    public function sendRefundFailedAdminEmail($orderId)
+    public function sendRefundFailedAdminEmail($orderId): bool
     {
         $order = $this->processor->getOrderByIncrementId($orderId);
         $recipient = $this->cnf->getValue(
@@ -1862,7 +1863,8 @@ class Connector extends AbstractConnector implements ConnectorInterface
         $subject,
         array $fields = [],
         $file = null
-    ) {
+    ): bool
+    {
         // Attached files
         $attachedFiles = [];
         // phpcs:ignore
@@ -1907,7 +1909,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return bool
      */
-    public function logIngenicoPayment($orderId, \IngenicoClient\Payment $data)
+    public function logIngenicoPayment($orderId, \IngenicoClient\Payment $data): bool
     {
         $trxData = $data->getData();
         $trxData['order_id'] = $orderId;
@@ -1982,7 +1984,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return \IngenicoClient\Payment
      */
-    public function getIngenicoPaymentLog($orderId)
+    public function getIngenicoPaymentLog($orderId): \IngenicoClient\Payment
     {
         $collection = $this->transactionCollectionFactory
             ->create()
@@ -2008,7 +2010,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return \IngenicoClient\Payment
      */
-    public function getIngenicoPaymentById($payId)
+    public function getIngenicoPaymentById($payId): \IngenicoClient\Payment
     {
         $collection = $this->transactionCollectionFactory
             ->create()
@@ -2031,9 +2033,9 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * Retrieves Ingenico Pay ID by the specified platform order ID.
      *
      * @param $orderId
-     * @return string|false
+     * @return false|string
      */
-    public function getIngenicoPayIdByOrderId($orderId)
+    public function getIngenicoPayIdByOrderId($orderId): false|string
     {
         $collection = $this->transactionCollectionFactory
             ->create()
@@ -2046,7 +2048,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
             return $collection->getFirstItem()->getPayId();
         }
 
-        return null;
+        return false;
     }
 
     /**
@@ -2055,7 +2057,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param $customerId
      * @return array
      */
-    public function getCustomerAliases($customerId)
+    public function getCustomerAliases($customerId): array
     {
         $aliasColl = $this->aliasCollectionFactory->create()
                                                   ->addFieldToFilter('customer_id', $customerId);
@@ -2070,7 +2072,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param $aliasId
      * @return array|false
      */
-    public function getAlias($aliasId)
+    public function getAlias($aliasId): false|array
     {
         $alias = $this->aliasFactory->create()->load($aliasId, self::PARAM_NAME_ALIAS);
         if ($alias->getId()) {
@@ -2090,7 +2092,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param array $data
      * @return bool
      */
-    public function saveAlias($customerId, array $data)
+    public function saveAlias($customerId, array $data): bool
     {
         $data['customer_id'] = $customerId;
         $data = array_change_key_case($data, CASE_LOWER);
@@ -2132,7 +2134,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return void
      */
-    public function showSuccessTemplate(array $fields, \IngenicoClient\Payment $payment)
+    public function showSuccessTemplate(array $fields, \IngenicoClient\Payment $payment): void
     {
         $this->emptyShoppingCart();
         $this->registry->register(self::REGISTRY_KEY_REDIRECT_URL, $this->getUrl('checkout/onepage/success'));
@@ -2146,7 +2148,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return void
      */
-    public function showSecurityCheckTemplate(array $fields, \IngenicoClient\Payment $payment)
+    public function showSecurityCheckTemplate(array $fields, \IngenicoClient\Payment $payment): void
     {
         // Render $fields['html']
         $this->registry->register(self::REGISTRY_KEY_TEMPLATE_VARS_ALIAS, $fields);
@@ -2180,7 +2182,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @return void
      * @SuppressWarnings(MEQP2.Classes.ObjectManager.ObjectManagerFound)
      */
-    public function showCancellationTemplate(array $fields, \IngenicoClient\Payment $payment)
+    public function showCancellationTemplate(array $fields, \IngenicoClient\Payment $payment): void
     {
         $message = $fields[self::PARAM_NAME_MESSAGE] ?? __('checkout.payment_cancelled');
 
@@ -2223,12 +2225,12 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param array $fields
      * @return void
      */
-    public function showInlineLoaderTemplate(array $fields)
+    public function showInlineLoaderTemplate(array $fields): void
     {
         $this->registry->register(self::REGISTRY_KEY_INLINE_LOADER_PARAMS, $fields);
     }
 
-    public function finishReturnInline($orderId, $cardBrand, $aliasId)
+    public function finishReturnInline($orderId, $cardBrand, $aliasId): array
     {
         try {
             $result = $this->coreLibrary->finishReturnInline($orderId, $cardBrand, $aliasId);
@@ -2253,7 +2255,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param $message
      * @return void
      */
-    public function setOrderErrorPage($message)
+    public function setOrderErrorPage($message): void
     {
         $this->restoreShoppingCart();
         throw new LocalizedException(__($message));
@@ -2267,7 +2269,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return void
      */
-    public function showPaymentErrorTemplate(array $fields, \IngenicoClient\Payment $payment)
+    public function showPaymentErrorTemplate(array $fields, \IngenicoClient\Payment $payment): void
     {
         $message = $fields[self::PARAM_NAME_MESSAGE] ?? __('ingenico.exception.message4');
 
@@ -2297,7 +2299,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return void
      */
-    public function showPaymentListRedirectTemplate(array $fields)
+    public function showPaymentListRedirectTemplate(array $fields): void
     {
         $this->registry->register(self::REGISTRY_KEY_TEMPLATE_VARS_REDIRECT, $fields);
     }
@@ -2309,7 +2311,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return void
      */
-    public function showPaymentListInlineTemplate(array $fields)
+    public function showPaymentListInlineTemplate(array $fields): void
     {
         $this->registry->register(self::REGISTRY_KEY_TEMPLATE_VARS_INLINE, $fields);
     }
@@ -2322,7 +2324,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return void
      */
-    public function showPaymentListAliasTemplate(array $fields)
+    public function showPaymentListAliasTemplate(array $fields): void
     {
         // do nothing
     }
@@ -2334,7 +2336,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return array
      */
-    public function getNonactualisedOrdersPaidWithIngenico()
+    public function getNonactualisedOrdersPaidWithIngenico(): array
     {
         // do nothing
     }
@@ -2347,7 +2349,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param bool $value
      * @return bool
      */
-    public function setIsPaymentStatusActualised($orderId, $value)
+    public function setIsPaymentStatusActualised($orderId, $value): bool
     {
         // do nothing
     }
@@ -2357,7 +2359,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return array
      */
-    public function getPendingReminders()
+    public function getPendingReminders(): array
     {
         $result = [];
         $coll = $this->reminderCollectionFactory->create()->addFieldToFilter('is_sent', 0);
@@ -2375,7 +2377,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return void
      */
-    public function setReminderSent($orderId)
+    public function setReminderSent($orderId): void
     {
         $this->reminderFactory->create()->markAsSent($orderId);
     }
@@ -2387,7 +2389,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param mixed $orderId
      * @return void
      */
-    public function enqueueReminder($orderId)
+    public function enqueueReminder($orderId): void
     {
         try {
             $order = $this->processor->getOrderByIncrementId($orderId);
@@ -2402,7 +2404,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return void
      */
-    public function showReminderPayOrderPage()
+    public function showReminderPayOrderPage(): void
     {
         // do nothing
     }
@@ -2413,7 +2415,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return array
      */
-    public function getOrdersForReminding()
+    public function getOrdersForReminding(): array
     {
         $existingReminderOrderIds = $this->reminderCollectionFactory->create()
             ->getColumnValues(self::PARAM_NAME_ORDER_ID);
@@ -2433,7 +2435,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return array
      */
-    public function getPaymentCategories()
+    public function getPaymentCategories(): array
     {
         return $this->coreLibrary->getPaymentCategories();
     }
@@ -2444,7 +2446,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param $category
      * @return array
      */
-    public function getPaymentMethodsByCategory($category)
+    public function getPaymentMethodsByCategory($category): array
     {
         return $this->coreLibrary->getPaymentMethodsByCategory($category);
     }
@@ -2455,7 +2457,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return array
      */
-    public function getAllCountries()
+    public function getAllCountries(): array
     {
         return $this->coreLibrary->getAllCountries();
     }
@@ -2465,7 +2467,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return array
      */
-    public function getPaymentMethods()
+    public function getPaymentMethods(): array
     {
         return $this->coreLibrary->getPaymentMethods();
     }
@@ -2477,7 +2479,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return array
      */
-    public function getUnusedPaymentMethods()
+    public function getUnusedPaymentMethods(): array
     {
         return $this->coreLibrary->getUnusedPaymentMethods();
     }
@@ -2488,7 +2490,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param $brand
      * @return PaymentMethod|false
      */
-    public function getPaymentMethodByBrand($brand)
+    public function getPaymentMethodByBrand($brand): false|PaymentMethod
     {
         return $this->coreLibrary->getPaymentMethodByBrand($brand);
     }
@@ -2499,7 +2501,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param $orderId
      * @return bool
      */
-    public function isOrderCreated($orderId)
+    public function isOrderCreated($orderId): bool
     {
         try {
             return (bool) $this->orderFactory->create()->loadByIncrementId($orderId)->getId();
@@ -2514,7 +2516,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param $reservedOrderId
      * @return string
      */
-    public function getCcIframeUrlBeforePlaceOrder()
+    public function getCcIframeUrlBeforePlaceOrder(): false|string
     {
         if ($this->request->getFullActionName() !== 'checkout_index_index') {
             return false;
@@ -2532,7 +2534,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return void
      */
-    public function cronHandler()
+    public function cronHandler(): void
     {
         $this->coreLibrary->cronHandler();
     }
@@ -2545,7 +2547,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return void
      */
-    public function webhookListener()
+    public function webhookListener(): void
     {
         $this->coreLibrary->webhookListener();
     }
@@ -2555,13 +2557,13 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return void
      */
-    public function emptyShoppingCart()
+    public function emptyShoppingCart(): void
     {
         $this->checkoutSession->getQuote()->setIsActive(0)->save();
         $this->checkoutSession->setData('invalidate_cart', 1);
     }
 
-    private function restoreCheckoutSessionLastRealOrderId($orderId = null)
+    private function restoreCheckoutSessionLastRealOrderId($orderId = null): void
     {
         if ($orderId && !$this->checkoutSession->getLastRealOrderId()) {
             $this->checkoutSession->setLastRealOrderId($orderId);
@@ -2570,7 +2572,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
     /**
      * Restore Shopping Cart.
      */
-    public function restoreShoppingCart($orderId = null)
+    public function restoreShoppingCart($orderId = null): void
     {
         if ($this->checkoutSession->getData(self::PARAM_NAME_REMINDER_ORDER_ID)) {
             return;
@@ -2587,7 +2589,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param $selected_countries array of selected countries iso codes
      * @return array
      */
-    public function filterCountries($query, $selected_countries)
+    public function filterCountries($query, $selected_countries): array
     {
         // do nothing
     }
@@ -2598,7 +2600,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param $query
      * @return array
      */
-    public function filterPaymentMethods($query)
+    public function filterPaymentMethods($query): array
     {
         // do nothing
     }
@@ -2610,7 +2612,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param PaymentMethod $pm
      * @return array
      */
-    public function retrieveMissingFields($orderId, \IngenicoClient\PaymentMethod\PaymentMethod $pm)
+    public function retrieveMissingFields($orderId, \IngenicoClient\PaymentMethod\PaymentMethod $pm): array
     {
         $result = $this->coreLibrary->getMissingOrderFields($orderId, $pm);
 
@@ -2622,7 +2624,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @param $request
      */
-    public function processOpenInvoiceFields(\Magento\Framework\App\RequestInterface $request)
+    public function processOpenInvoiceFields(\Magento\Framework\App\RequestInterface $request): void
     {
         // Build Alias with PaymentMethod and Brand
         /** @var \IngenicoClient\Alias $alias */
@@ -2644,7 +2646,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param array $fields Form fields
      * @return void
      */
-    public function processOpenInvoicePayment($orderId, \IngenicoClient\Alias $alias, array $fields = [])
+    public function processOpenInvoicePayment($orderId, \IngenicoClient\Alias $alias, array $fields = []): void
     {
         // @see Connector::showPaymentListRedirectTemplate()
         // @see Connector::clarifyOpenInvoiceAdditionalFields()
@@ -2663,7 +2665,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param \IngenicoClient\Alias $alias
      * @param array $fields
      */
-    public function processOpenInvoiceInvalidFields($orderId, \IngenicoClient\Alias $alias, array $fields)
+    public function processOpenInvoiceInvalidFields($orderId, \IngenicoClient\Alias $alias, array $fields): void
     {
         foreach ($fields as $field) {
             if (!$field->getIsValid()) {
@@ -2680,7 +2682,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param \IngenicoClient\Alias $alias
      * @param array $fields
      */
-    public function clarifyOpenInvoiceAdditionalFields($orderId, \IngenicoClient\Alias $alias, array $fields)
+    public function clarifyOpenInvoiceAdditionalFields($orderId, \IngenicoClient\Alias $alias, array $fields): void
     {
         $this->log(sprintf('%s %s', __METHOD__, var_export($fields, true)), 'debug');
 
@@ -2707,7 +2709,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return array
      */
-    public function getSessionValues()
+    public function getSessionValues(): array
     {
         if ($fields = $this->customerSession->getCoreSessionStorage()) {
             return $fields;
@@ -2722,7 +2724,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param string $key
      * @return mixed
      */
-    public function getSessionValue($key)
+    public function getSessionValue($key): mixed
     {
         $fields = $this->getSessionValues();
         return isset($fields[$key]) ? $fields[$key] : null;
@@ -2735,7 +2737,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param mixed $value
      * @return void
      */
-    public function setSessionValue($key, $value)
+    public function setSessionValue($key, $value): void
     {
         $fields = $this->getSessionValues();
         $fields[$key] = $value;
@@ -2748,7 +2750,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param $key
      * @return void
      */
-    public function unsetSessionValue($key)
+    public function unsetSessionValue($key): void
     {
         $fields = $this->getSessionValues();
         unset($fields[$key]);
@@ -2761,7 +2763,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param string $field
      * @return string
      */
-    public function getOrderFieldLabel($field)
+    public function getOrderFieldLabel($field): string
     {
         // @todo Set labels for fields
         switch ($field) {
@@ -2779,7 +2781,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @param array $fields Additional variables used for dynamic rendering
      * @return void
      */
-    public function showRedirectPaymentPageTemplate(array $fields = [])
+    public function showRedirectPaymentPageTemplate(array $fields = []): void
     {
         // do nothing
     }
@@ -2787,9 +2789,9 @@ class Connector extends AbstractConnector implements ConnectorInterface
     /**
      * Returns URL of the Ingenico Payment Page template that hosted on the Merchant.
      *
-     * @return string
+     * @return void
      */
-    public function getRedirectPaymentPageTemplateUrl()
+    public function getRedirectPaymentPageTemplateUrl(): void
     {
         // do nothing
     }
@@ -2824,7 +2826,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @return Data Data with url and fields keys
      * @throws Exception
      */
-    public function getSpecifiedRedirectPaymentRequest($aliasId, $paymentMethod, $brand, $paymentId = null)
+    public function getSpecifiedRedirectPaymentRequest($aliasId, $paymentMethod, $brand, $paymentId = null): Data
     {
         $orderId = $this->requestOrderId();
 
@@ -2846,7 +2848,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return string
      */
-    public function getPlatformEnvironment()
+    public function getPlatformEnvironment(): string
     {
         return \IngenicoClient\IngenicoCoreLibrary::PLATFORM_INGENICO;
     }
@@ -2860,7 +2862,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      * @throws LocalizedException
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    private function getStoreId($orderId = null)
+    private function getStoreId($orderId = null): float|false|int|null
     {
         if ($orderId) {
             $order = $this->processor->getOrderByIncrementId($orderId);
@@ -2877,7 +2879,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
         return $this->storeManager->getStore()->getId();
     }
 
-    private function getUrl($path, $params = [])
+    private function getUrl($path, $params = []): string
     {
         $defaultParams = ['_nosid' => true, self::CNF_SCOPE_PARAM_NAME => $this->getStoreId()];
         $params = array_merge($defaultParams, $params);
@@ -2891,7 +2893,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
     }
 
 
-    private function setEmailTemplate($templateName)
+    private function setEmailTemplate($templateName): void
     {
         $this->registry->unregister(self::PARAM_NAME_EMAIL_TEMPLATE);
         $this->registry->register(self::PARAM_NAME_EMAIL_TEMPLATE, $templateName);
@@ -2908,7 +2910,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
     }
 
 
-    private function _getStoreEmailLogo($storeId = 0)
+    private function _getStoreEmailLogo($storeId = 0): string
     {
         if ($storeId) {
             $this->appEmulation->startEnvironmentEmulation(
@@ -2927,7 +2929,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
         return $logoUrl;
     }
 
-    private function reserveOrderId()
+    private function reserveOrderId(): void
     {
         if ($this->checkoutSession->getQuote()->getReservedOrderId() === null || $this->isOrderCreated($this->checkoutSession->getQuote()->getReservedOrderId())) {
             $quote = $this->checkoutSession->getQuote()->reserveOrderId();
@@ -2942,7 +2944,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
      *
      * @return string|false
      */
-    private function getAdminUserLocale($email)
+    private function getAdminUserLocale($email): false|string
     {
         //UserCollectionFactory
         $collection = $this->userCollectionFactory->create();
@@ -2955,7 +2957,7 @@ class Connector extends AbstractConnector implements ConnectorInterface
         return false;
     }
 
-    private function getStoreIdBeforePlaceOrder()
+    private function getStoreIdBeforePlaceOrder(): false|int
     {
         if ($this->request->getFullActionName() !== 'checkout_index_index') {
             return false;

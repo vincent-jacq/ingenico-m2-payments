@@ -15,7 +15,7 @@ class CancelPaymentAuthorisation implements \Magento\Framework\Event\ObserverInt
         $this->_systemConfig = $systemConfig;
     }
 
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    public function execute(\Magento\Framework\Event\Observer $observer): void
     {
         $order = $observer->getData('order');
 

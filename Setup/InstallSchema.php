@@ -27,7 +27,7 @@ class InstallSchema implements InstallSchemaInterface
     const PARAM_NAME_CUSTOMER_ID = 'customer_id';
     const PARAM_NAME_ALIAS = 'alias';
 
-    public function install(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    public function install(SchemaSetupInterface $setup, ModuleContextInterface $context): void
     {
         $installer = $setup;
 

@@ -62,7 +62,7 @@ class Data extends AbstractHelper
      *
      * @return string[]
      */
-    public function getPaymentMethodCodes()
+    public function getPaymentMethodCodes(): array
     {
         $result = [];
         foreach ($this->cnf::getAllPaymentMethods() as $className) {
@@ -80,7 +80,7 @@ class Data extends AbstractHelper
      *
      * @return string|false
      */
-    public function getPaymentMethodCodeByCoreCode($coreCode)
+    public function getPaymentMethodCodeByCoreCode($coreCode): false|string
     {
         foreach ($this->cnf::getAllPaymentMethods() as $className) {
             $classWithNs = '\\Ingenico\\Payment\\Model\\Method\\' . $className;
@@ -100,7 +100,7 @@ class Data extends AbstractHelper
      *
      * @return \IngenicoClient\PaymentMethod\PaymentMethod|false
      */
-    public function getCoreMethod($methodId, array $methods = [])
+    public function getCoreMethod($methodId, array $methods = []): false|\IngenicoClient\PaymentMethod\PaymentMethod
     {
         if (count($methods) === 0) {
             $methods = $this->connector->getPaymentMethods();
@@ -120,7 +120,7 @@ class Data extends AbstractHelper
      *
      * @return AbstractMethod[]
      */
-    public function getActiveMagentoPaymentMethods()
+    public function getActiveMagentoPaymentMethods(): array
     {
         $result = [];
 
@@ -166,7 +166,7 @@ class Data extends AbstractHelper
      *
      * @return string
      */
-    public function getStoreId()
+    public function getStoreId(): string
     {
         return $this->storeManager->getStore()->getId();
     }
@@ -176,7 +176,7 @@ class Data extends AbstractHelper
      *
      * @param Order $order
      */
-    public function getGender(Order $order)
+    public function getGender(Order $order): bool|string
     {
         return $this->eavConfig
             ->getAttribute('customer', 'gender')

@@ -46,7 +46,7 @@ class Method extends Form
      *
      * @return bool
      */
-    public function isPaymentPageModeRedirect()
+    public function isPaymentPageModeRedirect(): bool
     {
         return $this->cnf->isPaymentPageModeRedirect($this->_storeManager->getStore()->getId());
     }

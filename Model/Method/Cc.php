@@ -25,7 +25,7 @@ class Cc extends AbstractMethod
      * @return $this
      * @throws LocalizedException
      */
-    public function assignData(DataObject $data)
+    public function assignData(DataObject $data): static
     {
         if (!$data instanceof DataObject) {
             $data = new DataObject($data);
@@ -51,7 +51,7 @@ class Cc extends AbstractMethod
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function validate()
+    public function validate(): static
     {
         parent::validate();
 
@@ -85,7 +85,7 @@ class Cc extends AbstractMethod
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @api
      */
-    public function initialize($paymentAction, $stateObject)
+    public function initialize($paymentAction, $stateObject): static
     {
         parent::initialize($paymentAction, $stateObject);
 

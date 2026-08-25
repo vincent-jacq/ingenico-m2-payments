@@ -11,7 +11,7 @@ class Flex extends Method
      *
      * @return array
      */
-    public function getFlexMethods()
+    public function getFlexMethods(): array
     {
         return $this->cnf->getFlexMethods($this->_storeManager->getStore()->getId());
     }

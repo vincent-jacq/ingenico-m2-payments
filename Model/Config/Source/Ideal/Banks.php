@@ -9,7 +9,7 @@ class Banks implements ArrayInterface
     /**
      * {@inheritdoc}
      */
-    public function toOptionArray()
+    public function toOptionArray(): array
     {
         return [
             [
