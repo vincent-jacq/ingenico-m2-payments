@@ -139,7 +139,7 @@ class Processor
      *
      * @return $this
      */
-    public function setConnector(IngenicoConnector $connector): static
+    public function setConnector(IngenicoConnector $connector)
     {
         $this->connector = $connector;
 
@@ -154,7 +154,7 @@ class Processor
      * @return \Magento\Sales\Model\Order
      * @throws LocalizedException
      */
-    public function getOrderByIncrementId($incrementId): \Magento\Sales\Model\Order
+    public function getOrderByIncrementId($incrementId)
     {
         if (!$incrementId) {
             throw new LocalizedException(__('ingenico.exception.message8'));
@@ -178,7 +178,7 @@ class Processor
      * @return \Magento\Sales\Api\Data\OrderInterface
      * @throws LocalizedException
      */
-    public function processOrderAuthorization($incrementId, $paymentResult, $message): \Magento\Sales\Api\Data\OrderInterface|\Magento\Sales\Model\Order
+    public function processOrderAuthorization($incrementId, $paymentResult, $message)
     {
         $order = $this->getOrderByIncrementId($incrementId);
         $authorizedStatus = $this->config->getOrderStatusAuth($order);
@@ -210,7 +210,7 @@ class Processor
      * @return \Magento\Sales\Api\Data\OrderInterface|\Magento\Sales\Model\Order
      * @throws LocalizedException
      */
-    public function processOrderPayment($incrementId, $paymentResult, $message): \Magento\Sales\Api\Data\OrderInterface|\Magento\Sales\Model\Order
+    public function processOrderPayment($incrementId, $paymentResult, $message)
     {
         $order = $this->getOrderByIncrementId($incrementId);
 
@@ -288,7 +288,7 @@ class Processor
     /**
      * Deprecated from v2.2.1, use processOrderDefault()
      */
-    public function processOrderCaptureProcessing($incrementId, $paymentResult, $message): \Magento\Sales\Api\Data\OrderInterface
+    public function processOrderCaptureProcessing($incrementId, $paymentResult, $message)
     {
         return $this->processOrderDefault($incrementId, $paymentResult, $message);
     }
@@ -296,7 +296,7 @@ class Processor
     /**
      * Deprecated from v2.2.1, use processOrderDefault()
      */
-    public function processOrderRefundProcessing($incrementId, $paymentResult, $message): \Magento\Sales\Api\Data\OrderInterface
+    public function processOrderRefundProcessing($incrementId, $paymentResult, $message)
     {
         return $this->processOrderDefault($incrementId, $paymentResult, $message);
     }
@@ -304,7 +304,7 @@ class Processor
     /**
      * Simply add record to order history, nothing else
      */
-    public function processOrderDefault($incrementId, $paymentResult, $message): \Magento\Sales\Api\Data\OrderInterface
+    public function processOrderDefault($incrementId, $paymentResult, $message)
     {
         $order = $this->getOrderByIncrementId($incrementId);
         $this->_addOrderMessage($order, $message);
@@ -322,7 +322,7 @@ class Processor
      * @return \Magento\Sales\Api\Data\OrderInterface
      * @throws LocalizedException
      */
-    public function processOrderRefund($incrementId, $paymentResult, $message): \Magento\Sales\Api\Data\OrderInterface
+    public function processOrderRefund($incrementId, $paymentResult, $message)
     {
         $order = $this->getOrderByIncrementId($incrementId);
 
@@ -394,7 +394,7 @@ class Processor
      * @return \Magento\Sales\Api\Data\OrderInterface
      * @throws LocalizedException
      */
-    public function processOrderCancellation($incrementId, $paymentResult, $message = null): \Magento\Sales\Api\Data\OrderInterface
+    public function processOrderCancellation($incrementId, $paymentResult, $message = null)
     {
         $order = $this->getOrderByIncrementId($incrementId);
 
@@ -410,7 +410,7 @@ class Processor
         return $this->orderRepository->save($order);
     }
 
-    protected function _addOrderMessage($order, $message, $fallbackMsg = null): void
+    protected function _addOrderMessage($order, $message, $fallbackMsg = null)
     {
         $order->addStatusToHistory(
             $order->getStatus(),

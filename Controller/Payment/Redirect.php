@@ -4,7 +4,7 @@ namespace Ingenico\Payment\Controller\Payment;
 
 class Redirect extends Base
 {
-    public function execute(): \Magento\Framework\Controller\ResultInterface|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Redirect
+    public function execute()
     {
         $order = $this->getOrder();
         if (!$order->getId()) {

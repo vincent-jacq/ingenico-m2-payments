@@ -65,7 +65,7 @@ class CheckoutOnepageControllerSuccessAction implements ObserverInterface
         $this->customerSession = $customerSession;
     }
 
-    public function execute(Observer $observer): void
+    public function execute(Observer $observer)
     {
         $orderId = $this->checkoutHelper->getCheckout()->getMultishippingMainOrderId();
         if ($orderId > 0) {

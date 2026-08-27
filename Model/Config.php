@@ -131,7 +131,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return \Magento\Config\Model\ResourceModel\Config
      */
-    public function saveConfig($path, $value, $scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT, $scopeId = 0): ConfigResourceModel
+    public function saveConfig($path, $value, $scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT, $scopeId = 0)
     {
         return $this->configResource->saveConfig(
             $path,
@@ -150,7 +150,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return \Magento\Config\Model\ResourceModel\Config
      */
-    public function deleteConfig($path, $scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT, $scopeId = 0): ConfigResourceModel
+    public function deleteConfig($path, $scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT, $scopeId = 0)
     {
         return $this->configResource->deleteConfig(
             $path,
@@ -164,7 +164,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return bool
      */
-    public function isExtensionConfigured($scopeId = null): bool
+    public function isExtensionConfigured($scopeId = null)
     {
         $mode = $this->getMode();
 
@@ -190,7 +190,7 @@ class Config extends \Magento\Framework\App\Config
      * @return bool
      * @SuppressWarnings(Generic.Files.LineLength.TooLong)
      */
-    public function isLoggingEnabled(): bool
+    public function isLoggingEnabled()
     {
         return $this->isSetFlag(self::XML_PATH_GENERAL_LOGGING, ScopeConfigInterface::SCOPE_TYPE_DEFAULT, 0);
     }
@@ -200,7 +200,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return int
      */
-    public function getOrderConfirmationEmailMode($scopeId = null): int
+    public function getOrderConfirmationEmailMode($scopeId = null)
     {
         return (int) $this->getValue(
             self::XML_PATH_SUPPRESS_ORDER_CONFIRMATION_EMAIL,
@@ -214,7 +214,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return string
      */
-    public function getOrderStatusForConfirmationEmail($scopeId = null): string
+    public function getOrderStatusForConfirmationEmail($scopeId = null)
     {
         return $this->getValue(
             self::XML_PATH_ORDER_STATUS_FOR_CONFIRMATION,
@@ -228,7 +228,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return string
      */
-    public function getCCLogos($scopeId = null): string
+    public function getCCLogos($scopeId = null)
     {
         $logos = $this->getValue(
             self::XML_PATH_CREDIT_CARD_LOGOS,
@@ -244,7 +244,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return array
      */
-    public function getFlexMethods($scopeId = null): array
+    public function getFlexMethods($scopeId = null)
     {
         $methods = $this->getValue(
             self::XML_PATH_FLEX_METHODS,
@@ -260,7 +260,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return string
      */
-    public function getFlexLogo($scopeId = null): string
+    public function getFlexLogo($scopeId = null)
     {
         return $this->getValue(
             self::XML_PATH_FLEX_LOGO,
@@ -276,7 +276,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return string|bool
      */
-    public function getMode($asBool = false, $scopeId = null): bool|string
+    public function getMode($asBool = false, $scopeId = null)
     {
         if ($asBool) {
             return $this->getValue(
@@ -301,7 +301,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return mixed
      */
-    public function getConnectionUser($mode, $scopeId = null): mixed
+    public function getConnectionUser($mode, $scopeId = null)
     {
         return $this->getValue(
             self::CONFIG_CONNECTION_KEY . $mode . '/user',
@@ -318,7 +318,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return mixed
      */
-    public function getConnectionPassword($mode, $scopeId = null): mixed
+    public function getConnectionPassword($mode, $scopeId = null)
     {
         return $this->getValue(
             self::CONFIG_CONNECTION_KEY . $mode . '/password',
@@ -335,7 +335,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return mixed
      */
-    public function getConnectionPspid($mode, $scopeId = null): mixed
+    public function getConnectionPspid($mode, $scopeId = null)
     {
         return $this->getValue(
             self::CONFIG_CONNECTION_KEY . $mode . '/pspid',
@@ -352,7 +352,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return mixed
      */
-    public function getConnectionSignature($mode, $scopeId = null): mixed
+    public function getConnectionSignature($mode, $scopeId = null)
     {
         return $this->getValue(
             self::CONFIG_CONNECTION_KEY . $mode . '/signature',
@@ -366,7 +366,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return bool
      */
-    public function getIsAdvancedSettingsMode($scopeId = null): bool
+    public function getIsAdvancedSettingsMode($scopeId = null)
     {
         return $this->getValue(
             self::XML_PATH_GENERAL_MODE,
@@ -381,7 +381,7 @@ class Config extends \Magento\Framework\App\Config
      * @return bool
      * @SuppressWarnings(Generic.Files.LineLength.TooLong)
      */
-    public function canUseSavedCards($scopeId = null): bool
+    public function canUseSavedCards($scopeId = null)
     {
         return $this->isTokenizationEnabled($scopeId) && $this->isStoredCardsEnabled($scopeId);
     }
@@ -393,7 +393,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return bool
      */
-    public function isTokenizationEnabled($scopeId = null): bool
+    public function isTokenizationEnabled($scopeId = null)
     {
         return $this->isSetFlag(
             self::XML_PATH_TOKENIZATION_ENABLED,
@@ -409,7 +409,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return bool
      */
-    public function isStoredCardsEnabled($scopeId = null): bool
+    public function isStoredCardsEnabled($scopeId = null)
     {
         return $this->isSetFlag(
             self::XML_PATH_TOKENIZATION_STORED_CARDS_ENABLED,
@@ -425,7 +425,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return bool
      */
-    public function getSkipSecurityCheck($scopeId = null): bool
+    public function getSkipSecurityCheck($scopeId = null)
     {
         return $this->isSetFlag(
             self::XML_PATH_TOKENIZATION_SKIP_SECURITY_CHECK,
@@ -441,7 +441,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return bool
      */
-    public function getSendEmailCaptureRequests($scopeId = null): bool
+    public function getSendEmailCaptureRequests($scopeId = null)
     {
         return $this->isSetFlag(
             self::XML_PATH_TOKENIZATION_CAPTURE_REQUEST_NOTIFY,
@@ -457,7 +457,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return bool
      */
-    public function getPaymentReminderEmailSend($scopeId = null): bool
+    public function getPaymentReminderEmailSend($scopeId = null)
     {
         return $this->isSetFlag(
             self::XML_PATH_ORDERS_PAYMENT_REMINDER_SEND,
@@ -473,7 +473,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return mixed
      */
-    public function getPaymentReminderEmailTimeout($scopeId = null): mixed
+    public function getPaymentReminderEmailTimeout($scopeId = null)
     {
         return $this->getValue(
             self::XML_PATH_ORDERS_PAYMENT_REMINDER_TIMEOUT,
@@ -487,7 +487,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return string[]
      */
-    public static function getAllPaymentMethods(): array
+    public static function getAllPaymentMethods()
     {
         $methods = [];
         $directory = __DIR__ . DIRECTORY_SEPARATOR . 'Method';
@@ -516,7 +516,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return array
      */
-    public function getActivePaymentMethods($scopeId = null): array
+    public function getActivePaymentMethods($scopeId = null)
     {
         if (!$this->isExtensionConfigured($scopeId)) {
             return [];
@@ -563,7 +563,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return string
      */
-    public function getPaymentPageMode($scopeId = null): string
+    public function getPaymentPageMode($scopeId = null)
     {
         $mode = $this->getValue(
             self::XML_PATH_PAYMENT_PAGE_PRESENTATION_MODE,
@@ -583,7 +583,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return bool
      */
-    public function isPaymentPageModeRedirect($scopeId = null): bool
+    public function isPaymentPageModeRedirect($scopeId = null)
     {
         return $this->getPaymentPageMode($scopeId) === Configuration::PAYMENT_TYPE_REDIRECT;
     }
@@ -593,7 +593,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return bool
      */
-    public function isPaymentPageModeInline($scopeId = null): bool
+    public function isPaymentPageModeInline($scopeId = null)
     {
         return $this->getPaymentPageMode($scopeId) === Configuration::PAYMENT_TYPE_INLINE;
     }
@@ -605,7 +605,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return mixed
      */
-    public function getPaymentPageTemplateSource($scopeId = null): mixed
+    public function getPaymentPageTemplateSource($scopeId = null)
     {
         return $this->getValue(
             self::XML_PATH_PAYMENT_PAGE_TEMPLATE_SOURCE,
@@ -621,7 +621,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return mixed
      */
-    public function getPaymentPageTemplateName($scopeId = null): mixed
+    public function getPaymentPageTemplateName($scopeId = null)
     {
         return $this->getValue(
             self::XML_PATH_PAYMENT_PAGE_TEMPLATE_NAME,
@@ -637,7 +637,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return mixed
      */
-    public function getPaymentPageExternalUrl($scopeId = null): mixed
+    public function getPaymentPageExternalUrl($scopeId = null)
     {
         return $this->getValue(
             self::XML_PATH_PAYMENT_PAGE_EXTERNAL_URL,
@@ -653,7 +653,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return mixed
      */
-    public function getPaymentPageLocal($scopeId = null): mixed
+    public function getPaymentPageLocal($scopeId = null)
     {
         return $this->getValue(
             self::XML_PATH_PAYMENT_PAGE_LOCAL,
@@ -669,7 +669,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return int
      */
-    public function getPaymentPageListType($scopeId = null): int
+    public function getPaymentPageListType($scopeId = null)
     {
         return (int) $this->getValue(
             self::XML_PATH_PAYMENT_PAGE_OPTIONS_PMLIST,
@@ -683,7 +683,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return bool
      */
-    public function isDirectSalesMode($scopeId = null): bool
+    public function isDirectSalesMode($scopeId = null)
     {
         return $this->isSetFlag(
             self::XML_PATH_TOKENIZATION_DIRECT_SALES,
@@ -696,7 +696,7 @@ class Config extends \Magento\Framework\App\Config
      * @return string
      * @SuppressWarnings(Generic.Files.LineLength.TooLong)
      */
-    public function getTemplateManagerUrl($scopeId = null): string
+    public function getTemplateManagerUrl($scopeId = null)
     {
         $out = [
             'live' => 'https://secure.ogone.com/Ncol/Prod/BackOffice/Template/defaulttemplate?MenuId=43&CSRFSP=%2fncol%2ftest%2fbackoffice%2fmenu%2findex&CSRFKEY=9AAD1230DF4EDF2C1ABBEAFBB016022D26D58041&CSRFTS=20190108114345&branding=OGONE&MigrationMode=DOTNET',
@@ -718,7 +718,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return array|mixed
      */
-    public function getPaymentAuthorisationNotificationEmail($scopeId = null): mixed
+    public function getPaymentAuthorisationNotificationEmail($scopeId = null)
     {
         return $this->getValue(
             self::XML_PATH_TOKENIZATION_CAPTURE_REQUEST_EMAIL,
@@ -732,7 +732,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return string
      */
-    public function getOrderStatusAuth(OrderInterface $order): string
+    public function getOrderStatusAuth(OrderInterface $order)
     {
         $scopeId = $order->getStoreId();
 
@@ -770,7 +770,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return string
      */
-    public function getOrderStatusSale(OrderInterface $order): string
+    public function getOrderStatusSale(OrderInterface $order)
     {
         $scopeId = $order->getStoreId();
 
@@ -810,7 +810,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return array|\Magento\Framework\Phrase|mixed
      */
-    public function getStoreName($storeId = null): mixed
+    public function getStoreName($storeId = null)
     {
         if ($this->getValue(
             Information::XML_PATH_STORE_INFO_NAME,
@@ -832,7 +832,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return string
      */
-    public function getStoreEmailLogo($storeId = null): string
+    public function getStoreEmailLogo($storeId = null)
     {
         return $this->template->getLogoUrlCustom($storeId);
     }
@@ -842,7 +842,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return mixed
      */
-    public function getIngenicoLogo($storeId = null): mixed
+    public function getIngenicoLogo($storeId = null)
     {
         return $this->assert->getUrl('Ingenico_Payment::images/logo_provider.png');
     }
@@ -855,7 +855,7 @@ class Config extends \Magento\Framework\App\Config
         return parse_url($baseUrl)['host'];
     }
 
-    public function exportSettingsJson(): false|string
+    public function exportSettingsJson()
     {
         $out = [];
         $coll = $this->configCollectionFactory->create()
@@ -887,7 +887,7 @@ class Config extends \Magento\Framework\App\Config
         return json_encode($out, JSON_PRETTY_PRINT);
     }
 
-    public function importSettingsJson($json): void
+    public function importSettingsJson($json)
     {
         $data = json_decode($json);
         if (!$data || !is_array($data)) {
@@ -906,7 +906,7 @@ class Config extends \Magento\Framework\App\Config
      * @param $status
      * @return DataObject
      */
-    public function getAssignedState($status): DataObject
+    public function getAssignedState($status)
     {
         $collection = $this->orderStatusCollectionFactory->create()->joinStates();
         $status = $collection->addAttributeToFilter('main_table.status', $status)
@@ -921,7 +921,7 @@ class Config extends \Magento\Framework\App\Config
      * @param string $state
      * @return DataObject
      */
-    public function getAssignedStatus($state): DataObject
+    public function getAssignedStatus($state)
     {
         $collection = $this->orderStatusCollectionFactory->create()->addStateFilter($state)
             ->addAttributeToSort('state_table.is_default', 'desc');
@@ -934,7 +934,7 @@ class Config extends \Magento\Framework\App\Config
      *
      * @return array
      */
-    public function getIDealBanks($scopeId = null): array
+    public function getIDealBanks($scopeId = null)
     {
         $banks = $this->getValue(
             self::XML_PATH_IDEAL_BANKS,

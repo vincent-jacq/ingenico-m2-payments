@@ -12,7 +12,7 @@ class Pmlist implements ArrayInterface
      *
      * @return array
      */
-    public function toOptionArray(): array
+    public function toOptionArray()
     {
         return [
             [

@@ -90,7 +90,7 @@ class AbstractMethod extends \Magento\Payment\Model\Method\AbstractMethod
      *
      * @return bool
      */
-    public function isActive($storeId = null): bool
+    public function isActive($storeId = null)
     {
         if (!$this->cnf->isExtensionConfigured()) {
             return false;
@@ -111,7 +111,7 @@ class AbstractMethod extends \Magento\Payment\Model\Method\AbstractMethod
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @api
      */
-    public function initialize($paymentAction, $stateObject): static
+    public function initialize($paymentAction, $stateObject)
     {
         $this->connector->log(sprintf('initialize: %s', $paymentAction));
 
@@ -135,12 +135,12 @@ class AbstractMethod extends \Magento\Payment\Model\Method\AbstractMethod
     /**
      * Retrieve information from payment configuration
      *
-     * @param string $field
+     * @param string                                     $field
      * @param int|string|null|\Magento\Store\Model\Store $storeId
      *
      * @return mixed
      */
-    public function getConfigData($field, $storeId = null): mixed
+    public function getConfigData($field, $storeId = null)
     {
         // Get default status for "Pending payment" state (instead of "New" state)
         if ('order_status' === $field) {
@@ -154,7 +154,7 @@ class AbstractMethod extends \Magento\Payment\Model\Method\AbstractMethod
     /**
      * @return mixed|false
      */
-    public function getCoreLibraryMethodInstance(): mixed
+    public function getCoreLibraryMethodInstance()
     {
         // Payment method with filled data is in saved registry
         $inlineData = $this->_registry->registry($this->connector::REGISTRY_KEY_TEMPLATE_VARS_INLINE);
@@ -174,13 +174,13 @@ class AbstractMethod extends \Magento\Payment\Model\Method\AbstractMethod
      * Capture
      *
      * @param \Magento\Payment\Model\InfoInterface $payment
-     * @param float $amount
+     * @param float                                $amount
      * @return $this
      * @throws \Magento\Framework\Exception\LocalizedException
      * @api
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function capture(\Magento\Payment\Model\InfoInterface $payment, $amount): static
+    public function capture(\Magento\Payment\Model\InfoInterface $payment, $amount)
     {
         if (!$this->canCapture()) {
             throw new LocalizedException(__('ingenico.exception.message6'));
@@ -225,13 +225,13 @@ class AbstractMethod extends \Magento\Payment\Model\Method\AbstractMethod
      * Refund specified amount for payment
      *
      * @param \Magento\Payment\Model\InfoInterface $payment
-     * @param float $amount
+     * @param float                                $amount
      * @return $this
      * @throws \Magento\Framework\Exception\LocalizedException
      * @api
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function refund(\Magento\Payment\Model\InfoInterface $payment, $amount): static
+    public function refund(\Magento\Payment\Model\InfoInterface $payment, $amount)
     {
         if (!$this->canRefund()) {
             throw new LocalizedException(__('ingenico.exception.message7'));
@@ -264,10 +264,10 @@ class AbstractMethod extends \Magento\Payment\Model\Method\AbstractMethod
 
             // Add Credit Transaction
             $payment->setAnetTransType(Transaction::TYPE_REFUND)
-                    ->setAmount($amount)
-                    ->setTransactionId($trxId)
-                    ->setIsTransactionClosed(0)
-                    ->setAdditionalInformation(Transaction::RAW_DETAILS, $result->getData());
+                ->setAmount($amount)
+                ->setTransactionId($trxId)
+                ->setIsTransactionClosed(0)
+                ->setAdditionalInformation(Transaction::RAW_DETAILS, $result->getData());
 
             switch ($result->getPaymentStatus()) {
                 case $this->connector->getCoreLibrary()::STATUS_REFUND_PROCESSING:
@@ -285,8 +285,8 @@ class AbstractMethod extends \Magento\Payment\Model\Method\AbstractMethod
             $this->connector->log($e->getMessage(), 'crit');
 
             $msg = __('modal.refund_failed.label1');
-            $msg .= ' '.__('modal.refund_failed.label2') . ' ' . $this->connector->getCoreLibrary()->getWhiteLabelsData()->getSupportEmail();
-            $msg .= ' '.__('modal.refund_failed.label3') . ' ' . $this->connector->getCoreLibrary()->getWhiteLabelsData()->getSupportUrl();
+            $msg .= ' ' . __('modal.refund_failed.label2') . ' ' . $this->connector->getCoreLibrary()->getWhiteLabelsData()->getSupportEmail();
+            $msg .= ' ' . __('modal.refund_failed.label3') . ' ' . $this->connector->getCoreLibrary()->getWhiteLabelsData()->getSupportUrl();
 
             throw new LocalizedException(__($msg));
         }
@@ -303,7 +303,7 @@ class AbstractMethod extends \Magento\Payment\Model\Method\AbstractMethod
      * @api
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function cancel(\Magento\Payment\Model\InfoInterface $payment): static
+    public function cancel(\Magento\Payment\Model\InfoInterface $payment)
     {
         /** @var Transaction $transaction */
         $transaction = $payment->getAuthorizationTransaction();
@@ -321,9 +321,9 @@ class AbstractMethod extends \Magento\Payment\Model\Method\AbstractMethod
 
             // Add Cancel Transaction
             $payment->setStatus(self::STATUS_DECLINED)
-                    ->setTransactionId($result->getPayId() . '-' . $result->getPayIdSub())
-                    ->setIsTransactionClosed(1)
-                    ->setAdditionalInformation(Transaction::RAW_DETAILS, $result);
+                ->setTransactionId($result->getPayId() . '-' . $result->getPayIdSub())
+                ->setIsTransactionClosed(1)
+                ->setAdditionalInformation(Transaction::RAW_DETAILS, $result);
         } catch (\Exception $e) {
             $this->connector->log($e->getMessage(), 'crit');
 
@@ -337,13 +337,13 @@ class AbstractMethod extends \Magento\Payment\Model\Method\AbstractMethod
      * Fetch transaction info
      *
      * @param \Magento\Payment\Model\InfoInterface $payment
-     * @param string $transactionId
+     * @param string                               $transactionId
      * @return mixed
      * @throws \Magento\Framework\Exception\LocalizedException
      * @api
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function fetchTransactionInfo(\Magento\Payment\Model\InfoInterface $payment, $transactionId): mixed
+    public function fetchTransactionInfo(\Magento\Payment\Model\InfoInterface $payment, $transactionId)
     {
         $trxData = $this->connector->getIngenicoPaymentById($transactionId);
         if (!$trxData) {

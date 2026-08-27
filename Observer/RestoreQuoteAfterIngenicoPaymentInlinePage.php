@@ -14,7 +14,7 @@ class RestoreQuoteAfterIngenicoPaymentInlinePage extends CheckIsReturnFromPaymen
      * Restore shopping cart when customer back from ingenico/payment/inline page.
      */
 
-    public function execute(Observer $observer): void
+    public function execute(Observer $observer)
     {
         if (!$this->isRequestFromPaymentInlinePage()) {
             return ;

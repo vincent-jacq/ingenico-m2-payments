@@ -95,7 +95,7 @@ class MultishippingCheckoutSubmitAllAfter implements ObserverInterface
         $this->customerSession = $customerSession;
     }
 
-    public function execute(Observer $observer): void
+    public function execute(Observer $observer)
     {
         /** @var \Magento\Quote\Model\Quote $quote */
         $quote = $observer->getData('quote');

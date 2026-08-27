@@ -5,7 +5,7 @@ namespace Ingenico\Payment\Block\Adminhtml\System\Config\PaymentPage\Redirect;
 class StepTwo extends \Magento\Backend\Block\AbstractBlock implements \Magento\Framework\Data\Form\Element\Renderer\RendererInterface
 {
 
-    public function render(\Magento\Framework\Data\Form\Element\AbstractElement $element): string
+    public function render(\Magento\Framework\Data\Form\Element\AbstractElement $element)
     {
         return implode('', [
             '<tr id="row_'.$element->getHtmlId().'">',

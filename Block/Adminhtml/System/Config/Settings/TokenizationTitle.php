@@ -5,7 +5,7 @@ namespace Ingenico\Payment\Block\Adminhtml\System\Config\Settings;
 class TokenizationTitle extends \Magento\Config\Block\System\Config\Form\Fieldset
 {
 
-    protected function _getHeaderTitleHtml($element): string
+    protected function _getHeaderTitleHtml($element)
     {
         return '<a id="' .
             $element->getHtmlId() .

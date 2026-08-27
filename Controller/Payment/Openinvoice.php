@@ -4,7 +4,7 @@ namespace Ingenico\Payment\Controller\Payment;
 
 class Openinvoice extends Base
 {
-    public function execute(): \Magento\Framework\Controller\ResultInterface|\Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\Result\Redirect
+    public function execute()
     {
         $redirect = $this->resultRedirectFactory->create()->setRefererUrl();
         try {

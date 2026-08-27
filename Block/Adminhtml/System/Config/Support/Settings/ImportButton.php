@@ -7,7 +7,7 @@ class ImportButton extends \Magento\Config\Block\System\Config\Form\Field
     /**
      * Set template to itself
      */
-    protected function _prepareLayout(): ImportButton|static
+    protected function _prepareLayout()
     {
         parent::_prepareLayout();
         if (!$this->getTemplate()) {
@@ -15,20 +15,20 @@ class ImportButton extends \Magento\Config\Block\System\Config\Form\Field
         }
         return $this;
     }
-
+    
     /**
      * Unset some non-related element parameters
      */
-    public function render(\Magento\Framework\Data\Form\Element\AbstractElement $element): string
+    public function render(\Magento\Framework\Data\Form\Element\AbstractElement $element)
     {
         $element->unsScope()->unsCanUseWebsiteValue()->unsCanUseDefaultValue();
         return parent::render($element);
     }
-
+    
     /**
      * Get the button and scripts contents
      */
-    protected function _getElementHtml(\Magento\Framework\Data\Form\Element\AbstractElement $element): string
+    protected function _getElementHtml(\Magento\Framework\Data\Form\Element\AbstractElement $element)
     {
         $originalData = $element->getOriginalData();
         $this->addData(

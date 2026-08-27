@@ -4,7 +4,7 @@ namespace Ingenico\Payment\Model\Config\Source\Settings\PaymentPage;
 
 class TemplateSource implements \Magento\Framework\Option\ArrayInterface
 {
-    public function toOptionArray(): array
+    public function toOptionArray()
     {
         $out = [];
         foreach ($this->toArray() as $value => $label) {
@@ -14,7 +14,7 @@ class TemplateSource implements \Magento\Framework\Option\ArrayInterface
         return $out;
     }
 
-    public function toArray(): array
+    public function toArray()
     {
         return [
             \IngenicoClient\Configuration::PAYMENT_PAGE_TEMPLATE_INGENICO => __('form.payment_page.label.ingenico'),

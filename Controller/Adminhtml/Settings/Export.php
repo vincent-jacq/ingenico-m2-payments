@@ -26,13 +26,13 @@ class Export extends \Magento\Backend\App\Action
         parent::__construct($context);
     }
 
-    public function execute(): \Magento\Framework\Controller\ResultInterface|\Magento\Framework\App\ResponseInterface
+    public function execute()
     {
         $fileName = sprintf('settings_%s_%s.json', $this->_cnf->getBaseHost(), date('dmY_H_i_s'));
         return $this->_fileFactory->create($fileName, $this->_cnf->exportSettingsJson(), DirectoryList::VAR_DIR);
     }
 
-    protected function _isAllowed(): bool
+    protected function _isAllowed()
     {
         return $this->_authorization->isAllowed('Ingenico_Payment::config_ingenico');
     }

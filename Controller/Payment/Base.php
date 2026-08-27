@@ -141,7 +141,7 @@ abstract class Base extends Action
      * @deprecated
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    protected function _processPayment(): void
+    protected function _processPayment()
     {
         // process only if we are dealing with checkout, not reminder
         if (!$this->_session->getData('reminder_order_id')) {
@@ -160,7 +160,7 @@ abstract class Base extends Action
      * Get Alias ID from the request
      * @return mixed|null
      */
-    protected function getAliasId(): mixed
+    protected function getAliasId()
     {
         $aliasId = $this->getRequest()->getParam('alias', null);
 
@@ -175,7 +175,7 @@ abstract class Base extends Action
      * Get order object
      * @return \Magento\Sales\Model\Order
      */
-    protected function getOrder(): \Magento\Sales\Model\Order
+    protected function getOrder()
     {
         $incrementId = $this->_session->getLastRealOrderId();
         return $this->orderFactory->create()->loadByIncrementId($incrementId);

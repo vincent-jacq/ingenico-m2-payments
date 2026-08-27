@@ -4,7 +4,7 @@ namespace Ingenico\Payment\Block\Adminhtml\System\Config\Instalments\Flexible;
 
 class Split extends \Magento\Config\Block\System\Config\Form\Field
 {
-    protected function _getElementHtml(\Magento\Framework\Data\Form\Element\AbstractElement $element): string
+    protected function _getElementHtml(\Magento\Framework\Data\Form\Element\AbstractElement $element)
     {
         return implode('', [
             parent::_getElementHtml($element),

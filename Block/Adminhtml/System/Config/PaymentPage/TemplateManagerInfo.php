@@ -18,7 +18,7 @@ class TemplateManagerInfo extends \Magento\Backend\Block\AbstractBlock implement
     }
 
 
-    public function render(\Magento\Framework\Data\Form\Element\AbstractElement $element): string
+    public function render(\Magento\Framework\Data\Form\Element\AbstractElement $element)
     {
         return implode('', [
             '<tr id="row_'.$element->getHtmlId().'">',

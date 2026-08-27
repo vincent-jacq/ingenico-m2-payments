@@ -4,7 +4,7 @@ namespace Ingenico\Payment\Block\Adminhtml\System\Config\Instalments;
 
 class Rules extends \Magento\Config\Block\System\Config\Form\Field
 {
-    protected function _getElementHtml(\Magento\Framework\Data\Form\Element\AbstractElement $element): string
+    protected function _getElementHtml(\Magento\Framework\Data\Form\Element\AbstractElement $element)
     {
         $linkTitle = __('What is the difference?');
         $modalTitle = __('What is the difference between flexible and fixed rules?');

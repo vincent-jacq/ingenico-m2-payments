@@ -8,7 +8,7 @@ class OrderEmail implements \Magento\Framework\Option\ArrayInterface
     const STATUS_DISABLED = 1;
     const STATUS_ONCHANGE = 3;
 
-    public function toOptionArray(): array
+    public function toOptionArray()
     {
         $out = [];
         foreach ($this->toArray() as $value => $label) {
@@ -18,7 +18,7 @@ class OrderEmail implements \Magento\Framework\Option\ArrayInterface
         return $out;
     }
 
-    public function toArray(): array
+    public function toArray()
     {
         return ['0' => __('No'), '1' => __('Yes'), '3' => __('ingenico.settings.label24')];
     }

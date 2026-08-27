@@ -8,7 +8,7 @@ namespace Ingenico\Payment\Block\Adminhtml\System\Config\Connection;
 class DirectLinkHeading extends \Magento\Config\Block\System\Config\Form\Field\Heading
 {
 
-    public function render(\Magento\Framework\Data\Form\Element\AbstractElement $element): string
+    public function render(\Magento\Framework\Data\Form\Element\AbstractElement $element)
     {
         $label = $element->getLabel()
             .'<span class="hint" onclick="Ogone.showModal(\'connection_directlink_content\',\''.__("modal.directlink.why").'\');"></span>';

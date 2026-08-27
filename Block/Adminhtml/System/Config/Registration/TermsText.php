@@ -5,7 +5,7 @@ namespace Ingenico\Payment\Block\Adminhtml\System\Config\Registration;
 class TermsText extends \Magento\Config\Block\System\Config\Form\Field
 {
 
-    public function render(\Magento\Framework\Data\Form\Element\AbstractElement $element): string
+    public function render(\Magento\Framework\Data\Form\Element\AbstractElement $element)
     {
         return implode('', [
             '<tr id="row_'.$element->getHtmlId().'">',

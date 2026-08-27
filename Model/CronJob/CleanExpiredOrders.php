@@ -60,21 +60,21 @@ class CleanExpiredOrders
     private $orderManagement;
 
     /**
-     * @param StoresConfig $storesConfig
-     * @param IngenicoLogger $logger
-     * @param OrderCollectionFactory $orderCollectionFactory
-     * @param PaymentCollectionFactory $paymentCollectionFactory
-     * @param OrderRepositoryInterface $orderRepository
+     * @param StoresConfig                  $storesConfig
+     * @param IngenicoLogger                $logger
+     * @param OrderCollectionFactory        $orderCollectionFactory
+     * @param PaymentCollectionFactory      $paymentCollectionFactory
+     * @param OrderRepositoryInterface      $orderRepository
      * @param OrderManagementInterface|null $orderManagement
      */
     public function __construct(
-        StoresConfig $storesConfig,
-        IngenicoConfig $ingenicoConfig,
-        IngenicoLogger $logger,
-        Connector $connector,
-        OrderCollectionFactory $orderCollectionFactory,
-        PaymentCollectionFactory $paymentCollectionFactory,
-        OrderRepositoryInterface $orderRepository,
+        StoresConfig              $storesConfig,
+        IngenicoConfig            $ingenicoConfig,
+        IngenicoLogger            $logger,
+        Connector                 $connector,
+        OrderCollectionFactory    $orderCollectionFactory,
+        PaymentCollectionFactory  $paymentCollectionFactory,
+        OrderRepositoryInterface  $orderRepository,
         ?OrderManagementInterface $orderManagement = null
     ) {
         $this->storesConfig = $storesConfig;
@@ -92,7 +92,7 @@ class CleanExpiredOrders
      *
      * @return void
      */
-    public function execute(): void
+    public function execute()
     {
         $lifetimes = $this->storesConfig->getStoresConfigByPath('sales/orders/delete_pending_after');
 
@@ -140,14 +140,14 @@ class CleanExpiredOrders
                         $this->logger->info(
                             sprintf('CleanExpiredOrders: Order #%s. It was paid, no cancel.', $entityId)
                         );
-                    } elseif ($result->getNcError() === '50001130' || (int) $result->getStatus() === 0) {
+                    } elseif ($result->getNcError() === '50001130' || (int)$result->getStatus() === 0) {
                         // Check for error: "unknown orderid xxx for merchant xxx" or zero status
                         $this->logger->info(
                             sprintf('CleanExpiredOrders: Order #%s. Cancel.', $entityId)
                         );
 
                         // Cancel the order
-                        $this->orderManagement->cancel((int) $entityId);
+                        $this->orderManagement->cancel((int)$entityId);
                         $order->addCommentToStatusHistory(__('The order was cancelled by the cron task.'));
                         $this->orderRepository->save($order);
                     }
@@ -183,7 +183,7 @@ class CleanExpiredOrders
                         sprintf('CleanExpiredOrders: Cancel #%s.', $entityId)
                     );
 
-                    $this->orderManagement->cancel((int) $entityId);
+                    $this->orderManagement->cancel((int)$entityId);
                 } catch (\Exception $e) {
                     $this->logger->info(
                         sprintf('CleanExpiredOrders: Failed to cancel #%s. %s', $entityId, $e->getMessage())
@@ -200,7 +200,7 @@ class CleanExpiredOrders
      *
      * @return OrderPaymentInterface|null
      */
-    private function getOrderPayment($orderId): ?OrderPaymentInterface
+    private function getOrderPayment($orderId)
     {
         $collection = $this->paymentCollectionFactory->create()->setOrderFilter($orderId);
         if ($collection) {

@@ -139,11 +139,11 @@ class TransportBuilder extends \Magento\Framework\Mail\Template\TransportBuilder
      * @param SenderResolverInterface           $senderResolver
      * @param ObjectManagerInterface            $objectManager
      * @param TransportInterfaceFactory         $mailTransportFactory
-     * @param MessageInterfaceFactory|null $messageFactory
+     * @param MessageInterfaceFactory|null      $messageFactory
      * @param EmailMessageInterfaceFactory|null $emailMessageInterfaceFactory
-     * @param MimeMessageInterfaceFactory|null $mimeMessageInterfaceFactory
-     * @param MimePartInterfaceFactory|null $mimePartInterfaceFactory
-     * @param addressConverter|null $addressConverter
+     * @param MimeMessageInterfaceFactory|null  $mimeMessageInterfaceFactory
+     * @param MimePartInterfaceFactory|null     $mimePartInterfaceFactory
+     * @param addressConverter|null             $addressConverter
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      * @SuppressWarnings(MEQP2.Classes.ObjectManager.ObjectManagerFound)
@@ -160,20 +160,20 @@ class TransportBuilder extends \Magento\Framework\Mail\Template\TransportBuilder
         ?MimePartInterfaceFactory     $mimePartInterfaceFactory = null,
         ?AddressConverter             $addressConverter = null
     ) {
-        $this->templateFactory              = $templateFactory;
-        $this->objectManager                = $objectManager;
-        $this->_senderResolver              = $senderResolver;
-        $this->mailTransportFactory         = $mailTransportFactory;
+        $this->templateFactory = $templateFactory;
+        $this->objectManager = $objectManager;
+        $this->_senderResolver = $senderResolver;
+        $this->mailTransportFactory = $mailTransportFactory;
         $this->emailMessageInterfaceFactory = $emailMessageInterfaceFactory
             ?: $this->objectManager
                 ->get(EmailMessageInterfaceFactory::class);
-        $this->mimeMessageInterfaceFactory  = $mimeMessageInterfaceFactory
+        $this->mimeMessageInterfaceFactory = $mimeMessageInterfaceFactory
             ?: $this->objectManager
                 ->get(MimeMessageInterfaceFactory::class);
-        $this->mimePartInterfaceFactory     = $mimePartInterfaceFactory
+        $this->mimePartInterfaceFactory = $mimePartInterfaceFactory
             ?: $this->objectManager
                 ->get(MimePartInterfaceFactory::class);
-        $this->addressConverter             = $addressConverter
+        $this->addressConverter = $addressConverter
             ?: $this->objectManager
                 ->get(AddressConverter::class);
 
@@ -199,7 +199,7 @@ class TransportBuilder extends \Magento\Framework\Mail\Template\TransportBuilder
      *
      * @return $this
      */
-    public function addCc($address, $name = ''): static
+    public function addCc($address, $name = '')
     {
         $this->addAddressByType('cc', $address, $name);
 
@@ -215,7 +215,7 @@ class TransportBuilder extends \Magento\Framework\Mail\Template\TransportBuilder
      * @return $this
      * @throws InvalidArgumentException
      */
-    public function addTo($address, $name = ''): static
+    public function addTo($address, $name = '')
     {
         $this->addAddressByType('to', $address, $name);
 
@@ -230,7 +230,7 @@ class TransportBuilder extends \Magento\Framework\Mail\Template\TransportBuilder
      * @return $this
      * @throws InvalidArgumentException
      */
-    public function addBcc($address): static
+    public function addBcc($address)
     {
         $this->addAddressByType('bcc', $address);
 
@@ -246,7 +246,7 @@ class TransportBuilder extends \Magento\Framework\Mail\Template\TransportBuilder
      * @return $this
      * @throws InvalidArgumentException
      */
-    public function setReplyTo($email, $name = null): static
+    public function setReplyTo($email, $name = null)
     {
         $this->addAddressByType('replyTo', $email, $name);
 
@@ -265,7 +265,7 @@ class TransportBuilder extends \Magento\Framework\Mail\Template\TransportBuilder
      * @deprecated 102.0.1 This function sets the from address but does not provide
      * a way of setting the correct from addresses based on the scope.
      */
-    public function setFrom($from): static
+    public function setFrom($from)
     {
         return $this->setFromByScope($from);
     }
@@ -281,7 +281,7 @@ class TransportBuilder extends \Magento\Framework\Mail\Template\TransportBuilder
      * @throws MailException
      * @since 102.0.1
      */
-    public function setFromByScope($from, $scopeId = null): static
+    public function setFromByScope($from, $scopeId = null)
     {
         $result = $this->_senderResolver->resolve($from, $scopeId);
         $this->addAddressByType('from', $result['email'], $result['name']);
@@ -296,7 +296,7 @@ class TransportBuilder extends \Magento\Framework\Mail\Template\TransportBuilder
      *
      * @return $this
      */
-    public function setTemplateIdentifier($templateIdentifier): static
+    public function setTemplateIdentifier($templateIdentifier)
     {
         $this->templateIdentifier = $templateIdentifier;
 
@@ -310,7 +310,7 @@ class TransportBuilder extends \Magento\Framework\Mail\Template\TransportBuilder
      *
      * @return $this
      */
-    public function setTemplateModel($templateModel): static
+    public function setTemplateModel($templateModel)
     {
         $this->templateModel = $templateModel;
 
@@ -324,7 +324,7 @@ class TransportBuilder extends \Magento\Framework\Mail\Template\TransportBuilder
      *
      * @return $this
      */
-    public function setTemplateVars($templateVars): static
+    public function setTemplateVars($templateVars)
     {
         $this->templateVars = $templateVars;
 
@@ -338,7 +338,7 @@ class TransportBuilder extends \Magento\Framework\Mail\Template\TransportBuilder
      *
      * @return $this
      */
-    public function setTemplateOptions($templateOptions): static
+    public function setTemplateOptions($templateOptions)
     {
         $this->templateOptions = $templateOptions;
 
@@ -351,7 +351,7 @@ class TransportBuilder extends \Magento\Framework\Mail\Template\TransportBuilder
      * @return TransportInterface
      * @throws LocalizedException
      */
-    public function getTransport(): TransportInterface
+    public function getTransport()
     {
         try {
             $this->prepareMessage();
@@ -368,12 +368,12 @@ class TransportBuilder extends \Magento\Framework\Mail\Template\TransportBuilder
      *
      * @return $this
      */
-    protected function reset(): static
+    protected function reset()
     {
-        $this->messageData        = [];
+        $this->messageData = [];
         $this->templateIdentifier = null;
-        $this->templateVars       = null;
-        $this->templateOptions    = null;
+        $this->templateVars = null;
+        $this->templateOptions = null;
 
         return $this;
     }
@@ -383,11 +383,11 @@ class TransportBuilder extends \Magento\Framework\Mail\Template\TransportBuilder
      *
      * @return TemplateInterface
      */
-    protected function getTemplate(): TemplateInterface
+    protected function getTemplate()
     {
         return $this->templateFactory->get($this->templateIdentifier, $this->templateModel)
-                                     ->setVars($this->templateVars)
-                                     ->setOptions($this->templateOptions);
+            ->setVars($this->templateVars)
+            ->setOptions($this->templateOptions);
     }
 
     /**
@@ -396,10 +396,10 @@ class TransportBuilder extends \Magento\Framework\Mail\Template\TransportBuilder
      * @return $this
      * @throws LocalizedException if template type is unknown
      */
-    protected function prepareMessage(): static
+    protected function prepareMessage()
     {
         $template = $this->getTemplate();
-        $content  = $template->processTemplate();
+        $content = $template->processTemplate();
         switch ($template->getType()) {
             case TemplateTypesInterface::TYPE_TEXT:
                 $partType = MimeInterface::TYPE_TEXT;
@@ -464,7 +464,7 @@ class TransportBuilder extends \Magento\Framework\Mail\Template\TransportBuilder
      *
      * @return TransportBuilder
      */
-    public function addAttachment(?string $content, ?string $fileName, ?string $fileType): static
+    public function addAttachment(?string $content, ?string $fileName, ?string $fileType)
     {
         $attachmentPartParameters = [
             'content' => $content,

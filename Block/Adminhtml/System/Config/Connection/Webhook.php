@@ -41,7 +41,7 @@ class Webhook extends Field
         $this->request = $request;
     }
 
-    protected function _getElementHtml(AbstractElement $element): string
+    protected function _getElementHtml(AbstractElement $element)
     {
         $storeId = $this->request->getParam('store');
         if (!$storeId) {

@@ -27,7 +27,7 @@ class StoredCardsEnabled extends \Magento\Config\Block\System\Config\Form\Field
      *
      * @return string
      */
-    public function render(\Magento\Framework\Data\Form\Element\AbstractElement $element): string
+    public function render(\Magento\Framework\Data\Form\Element\AbstractElement $element)
     {
         if (!$this->config->isPaymentPageModeRedirect()) {
             // Inject custom hint

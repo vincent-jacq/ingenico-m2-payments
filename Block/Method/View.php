@@ -42,7 +42,7 @@ class View extends \Magento\Framework\View\Element\Template
         $this->_registry = $registry;
     }
 
-    public function getPaymentMethods(): array
+    public function getPaymentMethods()
     {
         $result = $this->_registry->registry($this->_connector::REGISTRY_KEY_TEMPLATE_VARS_INLINE);
         if (isset($result['methods'])) {
@@ -85,7 +85,7 @@ class View extends \Magento\Framework\View\Element\Template
      *
      * @return false|Data Array like ['url' => '', 'fields' => []]
      */
-    public function getSpecifiedRedirectPaymentData(): false|Data
+    public function getSpecifiedRedirectPaymentData()
     {
         $paymentId = $this->getRequest()->getParam('payment_id', false);
         $paymentMethod = $this->getRequest()->getParam('pm', false);
@@ -103,7 +103,7 @@ class View extends \Magento\Framework\View\Element\Template
      *
      * @return array Array like ['url' => '', 'fields' => []]
      */
-    public function getRedirectPaymentData(): array
+    public function getRedirectPaymentData()
     {
         // There's result of $this->_connector->getCoreLibrary()->initiateRedirectPayment($orderId, $alias);
         return $this->_registry->registry($this->_connector::REGISTRY_KEY_TEMPLATE_VARS_REDIRECT);
@@ -114,7 +114,7 @@ class View extends \Magento\Framework\View\Element\Template
      *
      * @return string|false
      */
-    public function getSecurityHTMLAnswer(): false|string
+    public function getSecurityHTMLAnswer()
     {
         $result = $this->_registry->registry($this->_connector::REGISTRY_KEY_TEMPLATE_VARS_ALIAS);
         if ($result && isset($result['html'])) {
@@ -129,7 +129,7 @@ class View extends \Magento\Framework\View\Element\Template
      *
      * @return void
      */
-    public function setOrderRedirected(): void
+    public function setOrderRedirected()
     {
         $order = $this->getOrder();
 
@@ -148,7 +148,7 @@ class View extends \Magento\Framework\View\Element\Template
         }
     }
 
-    public function getLoaderUrl(): string
+    public function getLoaderUrl()
     {
         return $this->_assetRepo->getUrl('Ingenico_Payment::images/loader.svg');
     }
@@ -158,12 +158,12 @@ class View extends \Magento\Framework\View\Element\Template
         return $this->_registry->registry($this->_connector::REGISTRY_KEY_REDIRECT_URL);
     }
 
-    public function getAjaxUrl(): string
+    public function getAjaxUrl()
     {
         return $this->_urlBuilder->getUrl('ingenico/payment_ajax/inline');
     }
 
-    public function getOpenInvoicePostUrl(): string
+    public function getOpenInvoicePostUrl()
     {
         return $this->_urlBuilder->getUrl('ingenico/payment/openinvoice');
     }
@@ -173,7 +173,7 @@ class View extends \Magento\Framework\View\Element\Template
      *
      * @return array Like ['url' => '', 'fields' = []]
      */
-    public function getOpenInvoicePaymentData(): array
+    public function getOpenInvoicePaymentData()
     {
         return $this->_registry->registry($this->_connector::REGISTRY_KEY_TEMPLATE_VARS_OPENINVOICE);
     }
@@ -191,7 +191,7 @@ class View extends \Magento\Framework\View\Element\Template
     /**
      * @return \Magento\Sales\Model\Order|false
      */
-    public function getOrder(): false|Order
+    public function getOrder()
     {
         $incrementId = $this->_checkoutSession->getLastRealOrderId();
         if ($incrementId) {

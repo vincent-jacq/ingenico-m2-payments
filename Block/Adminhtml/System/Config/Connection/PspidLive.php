@@ -4,7 +4,7 @@ namespace Ingenico\Payment\Block\Adminhtml\System\Config\Connection;
 
 class PspidLive extends \Magento\Config\Block\System\Config\Form\Field
 {
-    protected function _getElementHtml(\Magento\Framework\Data\Form\Element\AbstractElement $element): string
+    protected function _getElementHtml(\Magento\Framework\Data\Form\Element\AbstractElement $element)
     {
         return implode('', [
             parent::_getElementHtml($element),

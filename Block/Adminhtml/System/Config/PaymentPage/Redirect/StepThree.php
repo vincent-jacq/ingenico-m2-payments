@@ -15,7 +15,7 @@ class StepThree extends \Magento\Backend\Block\AbstractBlock implements \Magento
         parent::__construct($context, $data);
     }
 
-    public function render(\Magento\Framework\Data\Form\Element\AbstractElement $element): string
+    public function render(\Magento\Framework\Data\Form\Element\AbstractElement $element)
     {
         return implode('', [
             '<tr id="row_'.$element->getHtmlId().'">',

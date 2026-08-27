@@ -79,7 +79,7 @@ class Dummy extends AbstractCarrier implements CarrierInterface
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function collectRates(RateRequest $request): Result|bool
+    public function collectRates(RateRequest $request)
     {
         /** @var \Magento\Quote\Model\Quote\Address\RateResult\Method $method */
         $method = $this->_rateMethodFactory->create();
@@ -105,7 +105,7 @@ class Dummy extends AbstractCarrier implements CarrierInterface
      *
      * @return array
      */
-    public function getAllowedMethods(): array
+    public function getAllowedMethods()
     {
         return [
             $this->_code => $this->getConfigData('name')

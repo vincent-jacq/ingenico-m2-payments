@@ -71,7 +71,7 @@ class Method extends \Magento\Payment\Block\Info
      *
      * @return array
      */
-    public function getSpecificInformation(): array
+    public function getSpecificInformation()
     {
         // Get Payment Info
         /** @var \Magento\Payment\Model\Info $info */
@@ -112,7 +112,7 @@ class Method extends \Magento\Payment\Block\Info
      * Render as PDF
      * @return string
      */
-    public function toPdf(): string
+    public function toPdf()
     {
         $this->setTemplate('Ingenico_Payment::info/pdf/method.phtml');
         return $this->toHtml();

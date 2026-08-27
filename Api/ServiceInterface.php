@@ -9,7 +9,7 @@ interface ServiceInterface
      *
      * @api
      * @param string $alias
-     * @return void
+     * @return string
      */
-    public function removeAlias(string $alias): void;
+    public function removeAlias($alias);
 }

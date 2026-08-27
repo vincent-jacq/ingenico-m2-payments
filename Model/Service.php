@@ -33,7 +33,7 @@ class Service implements ServiceInterface
      * @return void
      * @throws CouldNotSaveException
      */
-    public function removeAlias(string $alias): void
+    public function removeAlias($alias)
     {
         /** @var \Ingenico\Payment\Model\Alias $alias */
         $aliasObj = $this->aliasFactory->create()->load($alias, self::PARAM_NAME_ALIAS);

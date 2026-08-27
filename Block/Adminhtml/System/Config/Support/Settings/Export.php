@@ -35,7 +35,7 @@ class Export extends Field
         parent::__construct($context, $data);
     }
 
-    protected function _getElementHtml(AbstractElement $element): string
+    protected function _getElementHtml(AbstractElement $element)
     {
         $id = $element->getHtmlId();
         $link = $this->getUrlPath('ingenico/settings/export', ['_scope' => 0]);
@@ -44,7 +44,7 @@ class Export extends Field
         ]);
     }
 
-    private function getUrlPath($path, $params = []): string
+    private function getUrlPath($path, $params = [])
     {
         $defaultParams = ['_nosid' => true, '_scope' => $this->getStoreId()];
         $params = array_merge($defaultParams, $params);

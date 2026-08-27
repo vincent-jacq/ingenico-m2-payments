@@ -83,7 +83,7 @@ class IngenicoConfigProvider implements ConfigProviderInterface
     /**
      * {@inheritdoc}
      */
-    public function getConfig(): array
+    public function getConfig()
     {
         $storeId = $this->storeManager->getStore()->getId();
         $paymentMode = strtolower($this->cnf->getPaymentPageMode($storeId));
@@ -124,7 +124,7 @@ class IngenicoConfigProvider implements ConfigProviderInterface
      * Get Payment Logos.
      * @return array Returns array like ['ingenico_cc' => [0 => ['title' => '', 'src' => '']]]
      */
-    public function getPaymentLogos(): array
+    public function getPaymentLogos()
     {
         $storeId = $this->storeManager->getStore()->getId();
 
@@ -209,7 +209,7 @@ class IngenicoConfigProvider implements ConfigProviderInterface
      *
      * @return array
      */
-    public function getCCPaymentLogos(): array
+    public function getCCPaymentLogos()
     {
         $methods = $this->getPaymentLogos();
 
@@ -221,7 +221,7 @@ class IngenicoConfigProvider implements ConfigProviderInterface
      *
      * @return array
      */
-    public function getSavedCards(): array
+    public function getSavedCards()
     {
         $out = [];
         if ($this->cnf->canUseSavedCards() && $customerId = $this->customerSession->getId()) {
@@ -262,7 +262,7 @@ class IngenicoConfigProvider implements ConfigProviderInterface
      *
      * @return null|string
      */
-    private function getCustomerDefaultCard(): ?string
+    private function getCustomerDefaultCard()
     {
         if ($this->cnf->canUseSavedCards() && $customerId = $this->customerSession->getId()) {
             $savedCards = (array) $this->connector->getCoreLibrary()->getCustomerAliases($customerId);
@@ -279,7 +279,7 @@ class IngenicoConfigProvider implements ConfigProviderInterface
     /**
      * @return array
      */
-    public function getMethodsData(): array
+    public function getMethodsData()
     {
         $libraryPaymentObjects = $this->connector->getCoreLibrary()->getSelectedPaymentMethods();
         $activeM2PaymentObjects = $this->ingenicoHelper->getActiveMagentoPaymentMethods();

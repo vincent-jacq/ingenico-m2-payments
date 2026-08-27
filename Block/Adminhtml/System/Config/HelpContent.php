@@ -33,7 +33,7 @@ class HelpContent extends \Magento\Backend\Block\Template
         parent::__construct($context, $data);
     }
 
-    public function getImageUrl($imgName): string
+    public function getImageUrl($imgName)
     {
         return $this->_assetRepo->getUrl('Ingenico_Payment::images/help_images/'.$imgName);
     }
@@ -43,7 +43,7 @@ class HelpContent extends \Magento\Backend\Block\Template
      *
      * @return bool
      */
-    public function isTestMode(): bool
+    public function isTestMode()
     {
         return $this->cnf->getMode(true) === false;
     }
@@ -51,7 +51,7 @@ class HelpContent extends \Magento\Backend\Block\Template
     /**
      * @return \IngenicoClient\WhiteLabels
      */
-    public function getWhiteLabelsData(): \IngenicoClient\WhiteLabels
+    public function getWhiteLabelsData()
     {
         return $this->connector->getCoreLibrary()->getWhiteLabelsData();
     }

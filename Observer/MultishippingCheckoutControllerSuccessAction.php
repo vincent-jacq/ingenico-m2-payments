@@ -99,7 +99,7 @@ class MultishippingCheckoutControllerSuccessAction implements ObserverInterface
         $this->redirect = $redirect;
     }
 
-    public function execute(Observer $observer): void
+    public function execute(Observer $observer)
     {
         $orderId = $this->checkoutHelper->getCheckout()->getMultishippingMainOrderId();
         if (!$orderId) {

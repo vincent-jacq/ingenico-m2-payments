@@ -84,7 +84,7 @@ class MagentoConfigControllerAdminhtmlSystemConfigSave
      *
      * @param \Magento\Config\Controller\Adminhtml\System\Config\Save $subject
      */
-    protected function _processRegistrationRequest($subject): void
+    protected function _processRegistrationRequest($subject)
     {
         $data = $subject->getRequest()->getParam('groups');
         $data = $data['register']['fields'];
@@ -115,7 +115,7 @@ class MagentoConfigControllerAdminhtmlSystemConfigSave
      * @param \Magento\Config\Controller\Adminhtml\System\Config\Save $subject
      * @SuppressWarnings(Generic.Files.LineLength.TooLong)
      */
-    protected function _processConnectionRequest($subject): void
+    protected function _processConnectionRequest($subject)
     {
         $this->_redirect = false;
         $data = $subject->getRequest()->getParam('groups');
@@ -174,7 +174,7 @@ class MagentoConfigControllerAdminhtmlSystemConfigSave
      *
      * @param \Magento\Config\Controller\Adminhtml\System\Config\Save $subject
      */
-    protected function _processSupportRequest($subject): void
+    protected function _processSupportRequest($subject)
     {
         $data = $subject->getRequest()->getParam('groups');
         $data = $data['config_assistance']['fields'];
@@ -223,7 +223,7 @@ class MagentoConfigControllerAdminhtmlSystemConfigSave
      *
      * @param \Magento\Config\Controller\Adminhtml\System\Config\Save $subject
      */
-    protected function _processSettingsImport($subject): void
+    protected function _processSettingsImport($subject)
     {
         try {
             $files = $this->request->getFiles()->toArray();
